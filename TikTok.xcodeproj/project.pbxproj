@@ -93,6 +93,7 @@
 		67BC67C527324945004BFEBA /* TikTok */ = {
 			isa = PBXGroup;
 			children = (
+				67BC68042738E10E004BFEBA /* Models */,
 				67BC67DE27338555004BFEBA /* Managers */,
 				67BC67DD2733854C004BFEBA /* ViewModels */,
 				67BC67DC27338528004BFEBA /* Views */,
@@ -189,6 +190,13 @@
 			children = (
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		67BC68042738E10E004BFEBA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		97C2D08D4A7F0BEDA00D4841 /* Pods */ = {
