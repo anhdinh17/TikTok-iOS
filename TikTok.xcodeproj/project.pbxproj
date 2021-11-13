@@ -28,6 +28,7 @@
 		67BC67FE27338DE6004BFEBA /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC67FD27338DE6004BFEBA /* AuthenticationManager.swift */; };
 		67BC680027338E0E004BFEBA /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC67FF27338E0E004BFEBA /* HapticsManager.swift */; };
 		67BC68022734CDEC004BFEBA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 67BC68012734CDEC004BFEBA /* GoogleService-Info.plist */; };
+		67BC6806273F6712004BFEBA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC6805273F6712004BFEBA /* Extensions.swift */; };
 		97281E3EE179DB3E886CD772 /* Pods_TikTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310E03EC9CDDB541673B44E0 /* Pods_TikTok.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 		67BC67FD27338DE6004BFEBA /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		67BC67FF27338E0E004BFEBA /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
 		67BC68012734CDEC004BFEBA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		67BC6805273F6712004BFEBA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		6F7E1D6E41CC8E628E8122A1 /* Pods-TikTok.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TikTok.release.xcconfig"; path = "Target Support Files/Pods-TikTok/Pods-TikTok.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,6 +113,7 @@
 				67BC67CF27324948004BFEBA /* Assets.xcassets */,
 				67BC67C627324945004BFEBA /* AppDelegate.swift */,
 				67BC67C827324945004BFEBA /* SceneDelegate.swift */,
+				67BC6805273F6712004BFEBA /* Extensions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				67BC67F027338A0E004BFEBA /* SettingsViewController.swift in Sources */,
 				67BC67F827338D84004BFEBA /* APICaller.swift in Sources */,
 				67BC67F627338D57004BFEBA /* PostViewController.swift in Sources */,
+				67BC6806273F6712004BFEBA /* Extensions.swift in Sources */,
 				67BC67E42733896B004BFEBA /* CameraViewController.swift in Sources */,
 				67BC67F227338A58004BFEBA /* TabBarViewController.swift in Sources */,
 				67BC67CB27324945004BFEBA /* HomeViewController.swift in Sources */,
