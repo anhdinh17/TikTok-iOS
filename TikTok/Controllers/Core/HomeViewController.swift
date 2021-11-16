@@ -9,6 +9,7 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    // Create a UIScrollView
     private let horizontalScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.bounces = false
@@ -45,7 +46,7 @@ class HomeViewController: UIViewController {
     }
     
     func setUpFollowingFeed(){
-        // For-you screen
+        // Following screen
         // Create a UIPageController
         let pagingController = UIPageViewController(
             transitionStyle: .scroll,
@@ -65,11 +66,15 @@ class HomeViewController: UIViewController {
         
         pagingController.dataSource = self
         
+        // add UIPageVC to ScrollView
         horizontalScrollView.addSubview(pagingController.view)
+        // Vị trí bắt đầu của thằng UIPageVC này nằm ngay màn hình.
         pagingController.view.frame = CGRect(x: 0,
                                              y: 0,
                                              width: horizontalScrollView.width,
                                              height: horizontalScrollView.height)
+        // có add paging to Home thì mới kéo được
+        // dòng này giống như present(pagingVC, animated: true, completion: nil) trong playground.
         addChild(pagingController)
         pagingController.didMove(toParent: self) // add pagingController to HomeVC
     }
@@ -82,20 +87,21 @@ class HomeViewController: UIViewController {
             // scroll vertically
             navigationOrientation: .vertical,
             options: [:])
-        
+
         // This is the first VC appear on screen
         let vc = UIViewController()
-        vc.view.backgroundColor = .blue
-        
+        vc.view.backgroundColor = .yellow
+
         pagingController.setViewControllers(
             [vc],
             direction: .forward,
             animated: false,
             completion: nil)
-        
+
         pagingController.dataSource = self
-        
+
         horizontalScrollView.addSubview(pagingController.view)
+        // Vị trí bắt đầu của thằng UIPageVC này nằm ở phần kế bên của UIScrollView
         pagingController.view.frame = CGRect(x: view.width,
                                              y: 0,
                                              width: horizontalScrollView.width,
