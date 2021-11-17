@@ -10,7 +10,7 @@ import UIKit
 class HomeViewController: UIViewController {
     
     // Create a UIScrollView
-    private let horizontalScrollView: UIScrollView = {
+    let horizontalScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.bounces = false
         scrollView.isPagingEnabled = true
@@ -19,6 +19,26 @@ class HomeViewController: UIViewController {
         return scrollView
     }()
     
+    // For-you screen
+    // Create a UIPageController
+    let forYouPageViewController = UIPageViewController(
+        transitionStyle: .scroll,
+        // scroll vertically
+        navigationOrientation: .vertical,
+        options: [:])
+    
+    // Following screen
+    // Create a UIPageController
+    let followingPageViewController = UIPageViewController(
+        transitionStyle: .scroll,
+        // scroll vertically
+        navigationOrientation: .vertical,
+        options: [:])
+    
+    // Array of PostModel objects
+    private var forYouPosts = PostModel.mockModels()
+    private var followingPosts = PostModel.mockModels()
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +46,8 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .link
         
         view.addSubview(horizontalScrollView)
+        // set the start of ScrollView when we first launch the app. In this case, when we start the app, scrollView is on the right of the content, and we can scroll left.
+        horizontalScrollView.contentOffset = CGPoint(x: view.width, y: 0)
         
         setUpFeed()
     }
@@ -35,6 +57,7 @@ class HomeViewController: UIViewController {
         horizontalScrollView.frame = view.bounds
     }
     
+    //MARK: - Functions
     private func setUpFeed(){
         /* SIZE OF SCROLLVIEW:
          width: view.width * 2 because we have 2 controllers to be scrolled horizontally
@@ -46,84 +69,121 @@ class HomeViewController: UIViewController {
     }
     
     func setUpFollowingFeed(){
-        // Following screen
-        // Create a UIPageController
-        let pagingController = UIPageViewController(
-            transitionStyle: .scroll,
-            // scroll vertically
-            navigationOrientation: .vertical,
-            options: [:])
-        
         // This is the first VC appear on screen
-        let vc = UIViewController()
-        vc.view.backgroundColor = .blue
+        guard let model = followingPosts.first else {
+            return
+        }
         
-        pagingController.setViewControllers(
-            [vc],
+        followingPageViewController.setViewControllers(
+            [PostViewController(model: model)],
             direction: .forward,
             animated: false,
             completion: nil)
         
-        pagingController.dataSource = self
+        followingPageViewController.dataSource = self
         
         // add UIPageVC to ScrollView
-        horizontalScrollView.addSubview(pagingController.view)
-        // Vị trí bắt đầu của thằng UIPageVC này nằm ngay màn hình.
-        pagingController.view.frame = CGRect(x: 0,
+        horizontalScrollView.addSubview(followingPageViewController.view)
+        // Vị trí bắt đầu của thằng UIPageVC này nằm bên trái
+        followingPageViewController.view.frame = CGRect(x: 0,
                                              y: 0,
                                              width: horizontalScrollView.width,
                                              height: horizontalScrollView.height)
         // có add paging to Home thì mới kéo được
         // dòng này giống như present(pagingVC, animated: true, completion: nil) trong playground.
-        addChild(pagingController)
-        pagingController.didMove(toParent: self) // add pagingController to HomeVC
+        addChild(followingPageViewController)
+        followingPageViewController.didMove(toParent: self) // add pagingController to HomeVC
     }
     
     func setUpForYouFeed(){
-        // For-you screen
-        // Create a UIPageController
-        let pagingController = UIPageViewController(
-            transitionStyle: .scroll,
-            // scroll vertically
-            navigationOrientation: .vertical,
-            options: [:])
-
         // This is the first VC appear on screen
-        let vc = UIViewController()
-        vc.view.backgroundColor = .yellow
+        guard let model = forYouPosts.first else {
+            return
+        }
 
-        pagingController.setViewControllers(
-            [vc],
+        forYouPageViewController.setViewControllers(
+            [PostViewController(model: model)],
             direction: .forward,
             animated: false,
             completion: nil)
 
-        pagingController.dataSource = self
+        forYouPageViewController.dataSource = self
 
-        horizontalScrollView.addSubview(pagingController.view)
-        // Vị trí bắt đầu của thằng UIPageVC này nằm ở phần kế bên của UIScrollView
-        pagingController.view.frame = CGRect(x: view.width,
+        horizontalScrollView.addSubview(forYouPageViewController.view)
+        // Vị trí bắt đầu của thằng UIPageVC này nằm ở bên phải
+        forYouPageViewController.view.frame = CGRect(x: view.width,
                                              y: 0,
                                              width: horizontalScrollView.width,
                                              height: horizontalScrollView.height)
-        addChild(pagingController)
-        pagingController.didMove(toParent: self) // add pagingController to HomeVC
+        addChild(forYouPageViewController)
+        forYouPageViewController.didMove(toParent: self) // add pagingController to HomeVC
     }
     
 }
 
 //MARK: - DataSource of UIPageViewController
 extension HomeViewController: UIPageViewControllerDataSource {
+    // This func is to go back to prior page
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        return nil
+        
+        // fromPost là 1 PostModel object
+        guard let fromPost = (viewController as? PostViewController)?.model else {
+            return nil
+        }
+        
+        // make sure that we talking about the same PostModel
+        guard let index = currentPosts.firstIndex(where: {
+            $0.identifier == fromPost.identifier
+        }) else {
+            return nil
+        }
+        
+        // if the position is the first PageVC
+        if index == 0 {
+            return nil
+        }
+        let priorIndex = index - 1
+        // get PostModel from prior element
+        let model = currentPosts[priorIndex]
+        let vc = PostViewController(model: model)
+        
+        return vc
+        
     }
     
     // the next VC that we scroll to
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        let vc = UIViewController()
-        vc.view.backgroundColor = [UIColor.gray, UIColor.systemPink, UIColor.purple].randomElement()
+        // fromPost là 1 PostModel object
+        guard let fromPost = (viewController as? PostViewController)?.model else {
+            return nil
+        }
+        
+        // make sure that we talking about the same PostModel
+        guard let index = currentPosts.firstIndex(where: {
+            $0.identifier == fromPost.identifier
+        }) else {
+            return nil
+        }
+        
+        // if the position is the last PageVC
+        guard index < (currentPosts.count - 1) else {
+            return nil
+        }
+        let nextIndex = index + 1
+        // get PostModel from prior element
+        let model = currentPosts[nextIndex]
+        let vc = PostViewController(model: model)
+        
         return vc
     }
     
-    
+    var currentPosts: [PostModel] {
+        // nếu scrollView ở bên trái thì return array of followingPosts
+        if horizontalScrollView.contentOffset.x == 0 {
+            return followingPosts
+        }
+        
+        // Nếu scrollView ở bên phải thì return array of forYouPosts.
+        return forYouPosts
+    }
 }
