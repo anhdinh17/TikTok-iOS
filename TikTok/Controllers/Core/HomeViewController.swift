@@ -35,6 +35,16 @@ class HomeViewController: UIViewController {
         navigationOrientation: .vertical,
         options: [:])
     
+    // Create an UISegmentControll
+    let control: UISegmentedControl = {
+        let titles = ["Following", "For You"]
+        let control = UISegmentedControl(items: titles)
+        control.backgroundColor = .clear
+        control.selectedSegmentIndex = 1 // the right segment
+        
+        return control
+    }()
+    
     // Array of PostModel objects
     private var forYouPosts = PostModel.mockModels()
     private var followingPosts = PostModel.mockModels()
@@ -48,8 +58,12 @@ class HomeViewController: UIViewController {
         view.addSubview(horizontalScrollView)
         // set the start of ScrollView when we first launch the app. In this case, when we start the app, scrollView is on the right of the content, and we can scroll left.
         horizontalScrollView.contentOffset = CGPoint(x: view.width, y: 0)
+        // deleage of UIScrollView
+        horizontalScrollView.delegate = self
         
         setUpFeed()
+        
+        setUpHeaderButtons()
     }
     
     override func viewDidLayoutSubviews() {
@@ -58,6 +72,20 @@ class HomeViewController: UIViewController {
     }
     
     //MARK: - Functions
+    func setUpHeaderButtons(){
+        control.addTarget(self, action: #selector(didChangeSegmentControl(_ :)), for: .valueChanged)
+        // Add segment to nav bar
+        navigationItem.titleView = control
+    }
+    
+    // if segmentedIndex = 1, màn hình điện thoại(SCROLLVIEW) sẽ là ở bên For you, cũng tức là ở bên UIPageVC của For you
+    // if segmentedIndex = 0 thì ngược lại
+    @objc private func didChangeSegmentControl(_ sender: UISegmentedControl){
+        horizontalScrollView.setContentOffset(CGPoint(x: view.width * CGFloat(sender.selectedSegmentIndex),
+                                                      y: 0),
+                                              animated: true)
+    }
+    
     private func setUpFeed(){
         /* SIZE OF SCROLLVIEW:
          width: view.width * 2 because we have 2 controllers to be scrolled horizontally
@@ -185,5 +213,20 @@ extension HomeViewController: UIPageViewControllerDataSource {
         
         // Nếu scrollView ở bên phải thì return array of forYouPosts.
         return forYouPosts
+    }
+}
+
+//MARK: - UIScrollView Delegate
+extension HomeViewController: UIScrollViewDelegate {
+    // Func is to tell what happens when we scroll ScrollView
+    func scrollViewDidScroll(_ scrollView: UIScrollView){
+        // if you half way scroll to the left or you are at the left of ScrollView already, then change segmentIndex to 1
+        if scrollView.contentOffset.x == 0 || scrollView.contentOffset.x <= (view.width/2) {
+            control.selectedSegmentIndex = 0
+        }
+        // if you half way scroll to the right, then change segmentIndex to 1
+        else if scrollView.contentOffset.x > (view.width/2){
+            control.selectedSegmentIndex = 1
+        }
     }
 }
