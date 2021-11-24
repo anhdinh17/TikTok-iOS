@@ -253,7 +253,7 @@ extension HomeViewController: PostViewControllerDelegate{
             forYouPageViewController.dataSource = nil
         }
         
-        // create a CommentsVC and add it to PostVC
+        // create a CommentsVC and add it to HomeVC
         let vc = CommentsViewController(post: post)
         vc.delegate = self // to use Protocol form CommentsViewController
         addChild(vc)
