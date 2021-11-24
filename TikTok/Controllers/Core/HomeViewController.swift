@@ -21,7 +21,7 @@ class HomeViewController: UIViewController {
     
     // For-you screen
     // Create a UIPageController
-    let forYouPageViewController = UIPageViewController(
+    var forYouPageViewController = UIPageViewController(
         transitionStyle: .scroll,
         // scroll vertically
         navigationOrientation: .vertical,
@@ -29,7 +29,7 @@ class HomeViewController: UIViewController {
     
     // Following screen
     // Create a UIPageController
-    let followingPageViewController = UIPageViewController(
+    var followingPageViewController = UIPageViewController(
         transitionStyle: .scroll,
         // scroll vertically
         navigationOrientation: .vertical,
@@ -103,7 +103,7 @@ class HomeViewController: UIViewController {
         }
         
         let vc = PostViewController(model: model)
-        vc.delegate = self
+        vc.delegate = self // to use protocol from PostViewController
         followingPageViewController.setViewControllers(
             [vc],
             direction: .forward,
@@ -132,7 +132,7 @@ class HomeViewController: UIViewController {
         }
 
         let vc = PostViewController(model: model)
-        vc.delegate = self
+        vc.delegate = self // to use protocol from PostViewController
         forYouPageViewController.setViewControllers(
             [vc],
             direction: .forward,
@@ -178,7 +178,7 @@ extension HomeViewController: UIPageViewControllerDataSource {
         // get PostModel from prior element
         let model = currentPosts[priorIndex]
         let vc = PostViewController(model: model)
-        vc.delegate = self
+        vc.delegate = self // to use protocol from PostViewController
         return vc
         
     }
@@ -205,7 +205,7 @@ extension HomeViewController: UIPageViewControllerDataSource {
         // get PostModel from prior element
         let model = currentPosts[nextIndex]
         let vc = PostViewController(model: model)
-        vc.delegate = self
+        vc.delegate = self // to use protocol from PostViewController
         return vc
     }
     
@@ -235,6 +235,7 @@ extension HomeViewController: UIScrollViewDelegate {
     }
 }
 
+//MARK: - PostViewController Protocol
 extension HomeViewController: PostViewControllerDelegate{
     
     /*
@@ -245,6 +246,7 @@ extension HomeViewController: PostViewControllerDelegate{
         // cannot scroll vertically
         horizontalScrollView.isScrollEnabled = false
         
+        // don't let pageViewController scroll up or down either ScrollView is on the left or right
         if horizontalScrollView.contentOffset.x == 0 {
             followingPageViewController.dataSource = nil
         } else {
@@ -253,6 +255,7 @@ extension HomeViewController: PostViewControllerDelegate{
         
         // create a CommentsVC and add it to PostVC
         let vc = CommentsViewController(post: post)
+        vc.delegate = self // to use Protocol form CommentsViewController
         addChild(vc)
         vc.didMove(toParent: self)
         view.addSubview(vc.view)
@@ -267,6 +270,37 @@ extension HomeViewController: PostViewControllerDelegate{
                                    y: self.view.height - frame.height,
                                    width: frame.width,
                                    height:  frame.height)
+        }
+        /*
+        Chua hieu tai sao can vc.view.frame and UIView.animate()
+        **/
+    }
+}
+
+
+//MARK: - CommentsViewController Protocol
+extension HomeViewController: CommentsViewControllerDelegate {
+    func didTapCloseForComments(with viewController: CommentsViewController) {
+        // close comments with animation
+        // Chua hieu tai sao lai lam nhu vay
+        let frame = viewController.view.frame
+        UIView.animate(withDuration: 0.2) {
+            viewController.view.frame =  CGRect(x: 0,
+                                                y: self.view.height,
+                                                width: frame.width,
+                                                height: frame.height)
+        }completion: { [weak self] done in
+            if done {
+                DispatchQueue.main.async {
+                    // remove comment vc as child
+                    viewController.view.removeFromSuperview()
+                    viewController.removeFromParent()
+                    // allow horizontal and vertically scroll
+                    self?.horizontalScrollView.isScrollEnabled = true
+                    self?.forYouPageViewController.dataSource = self
+                    self?.followingPageViewController.dataSource = self
+                }
+            }
         }
     }
 }
