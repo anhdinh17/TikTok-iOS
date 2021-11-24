@@ -30,6 +30,7 @@
 		67BC68022734CDEC004BFEBA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 67BC68012734CDEC004BFEBA /* GoogleService-Info.plist */; };
 		67BC6806273F6712004BFEBA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC6805273F6712004BFEBA /* Extensions.swift */; };
 		67BC68482744B022004BFEBA /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC68472744B022004BFEBA /* PostModel.swift */; };
+		67BC684A274CA706004BFEBA /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC6849274CA706004BFEBA /* CommentsViewController.swift */; };
 		97281E3EE179DB3E886CD772 /* Pods_TikTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310E03EC9CDDB541673B44E0 /* Pods_TikTok.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		67BC68012734CDEC004BFEBA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		67BC6805273F6712004BFEBA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		67BC68472744B022004BFEBA /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
+		67BC6849274CA706004BFEBA /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		6F7E1D6E41CC8E628E8122A1 /* Pods-TikTok.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TikTok.release.xcconfig"; path = "Target Support Files/Pods-TikTok/Pods-TikTok.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -178,6 +180,7 @@
 				67BC67ED273389F6004BFEBA /* SignUpViewController.swift */,
 				67BC67EF27338A0E004BFEBA /* SettingsViewController.swift */,
 				67BC67F527338D57004BFEBA /* PostViewController.swift */,
+				67BC6849274CA706004BFEBA /* CommentsViewController.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 			files = (
 				67BC680027338E0E004BFEBA /* HapticsManager.swift in Sources */,
 				67BC68482744B022004BFEBA /* PostModel.swift in Sources */,
+				67BC684A274CA706004BFEBA /* CommentsViewController.swift in Sources */,
 				67BC67FC27338DC7004BFEBA /* DatabaseManager.swift in Sources */,
 				67BC67E227338950004BFEBA /* ExploreViewController.swift in Sources */,
 				67BC67EA273389CA004BFEBA /* UserListViewController.swift in Sources */,

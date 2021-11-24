@@ -102,8 +102,10 @@ class HomeViewController: UIViewController {
             return
         }
         
+        let vc = PostViewController(model: model)
+        vc.delegate = self
         followingPageViewController.setViewControllers(
-            [PostViewController(model: model)],
+            [vc],
             direction: .forward,
             animated: false,
             completion: nil)
@@ -129,8 +131,10 @@ class HomeViewController: UIViewController {
             return
         }
 
+        let vc = PostViewController(model: model)
+        vc.delegate = self
         forYouPageViewController.setViewControllers(
-            [PostViewController(model: model)],
+            [vc],
             direction: .forward,
             animated: false,
             completion: nil)
@@ -174,7 +178,7 @@ extension HomeViewController: UIPageViewControllerDataSource {
         // get PostModel from prior element
         let model = currentPosts[priorIndex]
         let vc = PostViewController(model: model)
-        
+        vc.delegate = self
         return vc
         
     }
@@ -201,7 +205,7 @@ extension HomeViewController: UIPageViewControllerDataSource {
         // get PostModel from prior element
         let model = currentPosts[nextIndex]
         let vc = PostViewController(model: model)
-        
+        vc.delegate = self
         return vc
     }
     
@@ -227,6 +231,42 @@ extension HomeViewController: UIScrollViewDelegate {
         // if you half way scroll to the right, then change segmentIndex to 1
         else if scrollView.contentOffset.x > (view.width/2){
             control.selectedSegmentIndex = 1
+        }
+    }
+}
+
+extension HomeViewController: PostViewControllerDelegate{
+    
+    /*
+     Func nay la de khi bam vao comment button
+     **/
+    func postViewControllerDelegate(_ vc: PostViewController, didTapCommentButtonFor post: PostModel) {
+        
+        // cannot scroll vertically
+        horizontalScrollView.isScrollEnabled = false
+        
+        if horizontalScrollView.contentOffset.x == 0 {
+            followingPageViewController.dataSource = nil
+        } else {
+            forYouPageViewController.dataSource = nil
+        }
+        
+        // create a CommentsVC and add it to PostVC
+        let vc = CommentsViewController(post: post)
+        addChild(vc)
+        vc.didMove(toParent: self)
+        view.addSubview(vc.view)
+        let frame: CGRect = CGRect(x: 0,
+                               y: view.height,
+                               width: view.width,
+                               height: view.height * 0.75)
+        vc.view.frame = frame
+        // animation to pop up commnent vc
+        UIView.animate(withDuration: 0.2) {
+            vc.view.frame = CGRect(x: 0,
+                                   y: self.view.height - frame.height,
+                                   width: frame.width,
+                                   height:  frame.height)
         }
     }
 }

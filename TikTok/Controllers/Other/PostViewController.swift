@@ -7,8 +7,14 @@
 
 import UIKit
 
+protocol PostViewControllerDelegate: AnyObject {
+    func postViewControllerDelegate(_ vc: PostViewController, didTapCommentButtonFor post: PostModel)
+}
+
 class PostViewController: UIViewController {
 
+    weak var delegate: PostViewControllerDelegate?
+    
     var model: PostModel
     
     private let likeButton: UIButton = {
@@ -64,7 +70,7 @@ class PostViewController: UIViewController {
         super.viewDidLoad()
 
         let color: [UIColor] = [
-            .red, .white, .orange, .systemPink, .darkGray, .systemGreen, .systemBlue
+            .red, .orange, .systemPink, .darkGray, .systemGreen, .systemBlue
         ]
         
         view.backgroundColor = color.randomElement()
@@ -119,7 +125,7 @@ class PostViewController: UIViewController {
     }
     
     @objc func didTapComment(){
-        
+        delegate?.postViewControllerDelegate(self, didTapCommentButtonFor: model)
     }
     
     @objc func didTapShare(){
