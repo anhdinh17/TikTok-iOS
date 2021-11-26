@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		679A0D02274EE73D00BF1449 /* PostComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679A0D01274EE73D00BF1449 /* PostComment.swift */; };
 		679A0D04274EE78000BF1449 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679A0D03274EE78000BF1449 /* User.swift */; };
+		679A0D0627508F1900BF1449 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679A0D0527508F1900BF1449 /* CommentTableViewCell.swift */; };
 		67BC67C727324945004BFEBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC67C627324945004BFEBA /* AppDelegate.swift */; };
 		67BC67C927324945004BFEBA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC67C827324945004BFEBA /* SceneDelegate.swift */; };
 		67BC67CB27324945004BFEBA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC67CA27324945004BFEBA /* HomeViewController.swift */; };
@@ -41,6 +42,7 @@
 		310E03EC9CDDB541673B44E0 /* Pods_TikTok.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TikTok.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		679A0D01274EE73D00BF1449 /* PostComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostComment.swift; sourceTree = "<group>"; };
 		679A0D03274EE78000BF1449 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		679A0D0527508F1900BF1449 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		67BC67C327324945004BFEBA /* TikTok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TikTok.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67BC67C627324945004BFEBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		67BC67C827324945004BFEBA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 		67BC67F427338D1F004BFEBA /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				679A0D0527508F1900BF1449 /* CommentTableViewCell.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				67BC67E627338988004BFEBA /* NotificationsViewController.swift in Sources */,
 				67BC67EC273389E3004BFEBA /* SignInViewController.swift in Sources */,
 				67BC67E82733899D004BFEBA /* ProfileViewController.swift in Sources */,
+				679A0D0627508F1900BF1449 /* CommentTableViewCell.swift in Sources */,
 				67BC67FA27338DA6004BFEBA /* StorageManager.swift in Sources */,
 				67BC67C727324945004BFEBA /* AppDelegate.swift in Sources */,
 				67BC67C927324945004BFEBA /* SceneDelegate.swift in Sources */,

@@ -239,7 +239,7 @@ extension HomeViewController: UIScrollViewDelegate {
 extension HomeViewController: PostViewControllerDelegate{
     
     /*
-     Func nay la de khi bam vao comment button
+     Func nay la de khi bam vao comment button, a comment are will pop up on the screen
      **/
     func postViewControllerDelegate(_ vc: PostViewController, didTapCommentButtonFor post: PostModel) {
         
@@ -280,6 +280,8 @@ extension HomeViewController: PostViewControllerDelegate{
 
 //MARK: - CommentsViewController Protocol
 extension HomeViewController: CommentsViewControllerDelegate {
+    
+    // This func is to close comment are when clicking on close button, and let us be able to scroll after closing comment area
     func didTapCloseForComments(with viewController: CommentsViewController) {
         // close comments with animation
         // Chua hieu tai sao lai lam nhu vay
@@ -304,3 +306,10 @@ extension HomeViewController: CommentsViewControllerDelegate {
         }
     }
 }
+
+//MARK: - NOTE
+/*
+ Reasons why for every local object of PostViewController we have to set it to be the delegate:
+ Think about it, when we start the app, we should be either on the left or on the right of the ScrollView, which means for each starting followingPageViewController or forYouPageViewController, we have to set the delegate for the PostViewController to use the protocol of clicking the Comment Button.
+ The same thing applies for scrolling to the next PageViewController, we need to set the next or the prior PostViewController to be the delegate to use the Comment Button protocol.
+**/
