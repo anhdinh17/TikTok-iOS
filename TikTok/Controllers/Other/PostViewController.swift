@@ -9,6 +9,7 @@ import UIKit
 
 protocol PostViewControllerDelegate: AnyObject {
     func postViewControllerDelegate(_ vc: PostViewController, didTapCommentButtonFor post: PostModel)
+    func postViewControllerDelegate(_ vc: PostViewController, didTapProfileButtonFor post: PostModel)
 }
 
 class PostViewController: UIViewController {
@@ -40,6 +41,17 @@ class PostViewController: UIViewController {
         button.setBackgroundImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
         button.tintColor = .white
         button.imageView?.contentMode = .scaleAspectFit
+        
+        return button
+    }()
+    
+    private let profileButton: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(UIImage(named:"test"), for: .normal)
+        button.tintColor = .white
+        button.imageView?.contentMode = .scaleAspectFill
+        button.clipsToBounds = true
+        button.layer.masksToBounds = true
         
         return button
     }()
@@ -80,6 +92,9 @@ class PostViewController: UIViewController {
         setUpDoubleTapToLike()
         
         view.addSubview(captionLabel)
+        
+        view.addSubview(profileButton)
+        profileButton.addTarget(self, action: #selector(didTapProfileButton), for: .touchUpInside)
     }
     
     override func viewDidLayoutSubviews() {
@@ -95,6 +110,13 @@ class PostViewController: UIViewController {
                                   width: size,
                                   height: size)
         }
+        
+        // Set up frame for profile button
+        profileButton.frame = CGRect(x: likeButton.left,
+                                     y: likeButton.top - 10 - size,
+                                     width: size,
+                                     height: size)
+        profileButton.layer.cornerRadius = size/2
         
         // set up frame for captionLabel, this is dynamic frame to fit the label if the label has a long String
         captionLabel.sizeToFit()
@@ -137,6 +159,10 @@ class PostViewController: UIViewController {
                                           applicationActivities: [])
         
         present(vc,animated: true)
+    }
+    
+    @objc func didTapProfileButton(){
+        delegate?.postViewControllerDelegate(self, didTapProfileButtonFor: model)
     }
     
     /*

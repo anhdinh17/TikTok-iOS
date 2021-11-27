@@ -239,7 +239,7 @@ extension HomeViewController: UIScrollViewDelegate {
 extension HomeViewController: PostViewControllerDelegate{
     
     /*
-     Func nay la de khi bam vao comment button, a comment are will pop up on the screen
+     Func nay la de khi bam vao comment button, a comment area will pop up on the screen
      **/
     func postViewControllerDelegate(_ vc: PostViewController, didTapCommentButtonFor post: PostModel) {
         
@@ -274,6 +274,13 @@ extension HomeViewController: PostViewControllerDelegate{
         /*
         Chua hieu tai sao can vc.view.frame and UIView.animate()
         **/
+    }
+    
+    // This func execute delegate when tapping on profile button
+    func postViewControllerDelegate(_ vc: PostViewController, didTapProfileButtonFor post: PostModel) {
+        let user = post.user
+        let vc = ProfileViewController(user: user)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

@@ -12,6 +12,10 @@ struct PostModel {
     
     var isLikeByCurrentUser = false
     
+    let user = User(userName:"Kanye West",
+                    profilePictureUrl: nil,
+                    identifier: UUID().uuidString)
+    
     // debug/mocking func
     static func mockModels() -> [PostModel] {
         var posts = [PostModel]()
