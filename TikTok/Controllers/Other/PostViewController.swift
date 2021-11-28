@@ -5,6 +5,7 @@
 //  Created by Anh Dinh on 11/3/21.
 //
 
+import AVFoundation
 import UIKit
 
 protocol PostViewControllerDelegate: AnyObject {
@@ -67,6 +68,8 @@ class PostViewController: UIViewController {
         return label
     }()
     
+    var player: AVPlayer?
+    
     //MARK: - Init
     init(model: PostModel){
         self.model = model
@@ -81,6 +84,8 @@ class PostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureVideo()
+        
         let color: [UIColor] = [
             .red, .orange, .systemPink, .darkGray, .systemGreen, .systemBlue
         ]
@@ -163,6 +168,22 @@ class PostViewController: UIViewController {
     
     @objc func didTapProfileButton(){
         delegate?.postViewControllerDelegate(self, didTapProfileButtonFor: model)
+    }
+    
+    // Func to play video
+    private func configureVideo(){
+        guard let path = Bundle.main.path(forResource: "harrypotter", ofType: "mp4") else {
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        player = AVPlayer(url: url)
+        
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = view.bounds
+        playerLayer.videoGravity = .resizeAspectFill
+        view.layer.addSublayer(playerLayer)
+        player?.volume = 0
+        player?.play()
     }
     
     /*

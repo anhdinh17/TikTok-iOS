@@ -10,6 +10,7 @@
 		679A0D02274EE73D00BF1449 /* PostComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679A0D01274EE73D00BF1449 /* PostComment.swift */; };
 		679A0D04274EE78000BF1449 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679A0D03274EE78000BF1449 /* User.swift */; };
 		679A0D0627508F1900BF1449 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679A0D0527508F1900BF1449 /* CommentTableViewCell.swift */; };
+		679A0D082752FCD600BF1449 /* harrypotter.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 679A0D072752FCD600BF1449 /* harrypotter.mp4 */; };
 		67BC67C727324945004BFEBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC67C627324945004BFEBA /* AppDelegate.swift */; };
 		67BC67C927324945004BFEBA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC67C827324945004BFEBA /* SceneDelegate.swift */; };
 		67BC67CB27324945004BFEBA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC67CA27324945004BFEBA /* HomeViewController.swift */; };
@@ -43,6 +44,7 @@
 		679A0D01274EE73D00BF1449 /* PostComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostComment.swift; sourceTree = "<group>"; };
 		679A0D03274EE78000BF1449 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		679A0D0527508F1900BF1449 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		679A0D072752FCD600BF1449 /* harrypotter.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = harrypotter.mp4; sourceTree = "<group>"; };
 		67BC67C327324945004BFEBA /* TikTok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TikTok.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67BC67C627324945004BFEBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		67BC67C827324945004BFEBA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 		67BC67DA27338503004BFEBA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				679A0D072752FCD600BF1449 /* harrypotter.mp4 */,
 				67BC68012734CDEC004BFEBA /* GoogleService-Info.plist */,
 				67BC67CF27324948004BFEBA /* Assets.xcassets */,
 				67BC67C627324945004BFEBA /* AppDelegate.swift */,
@@ -296,6 +299,7 @@
 			files = (
 				67BC67D327324948004BFEBA /* LaunchScreen.storyboard in Resources */,
 				67BC68022734CDEC004BFEBA /* GoogleService-Info.plist in Resources */,
+				679A0D082752FCD600BF1449 /* harrypotter.mp4 in Resources */,
 				67BC67D027324948004BFEBA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
