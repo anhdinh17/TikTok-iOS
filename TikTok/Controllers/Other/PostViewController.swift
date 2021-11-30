@@ -70,6 +70,9 @@ class PostViewController: UIViewController {
     
     var player: AVPlayer?
     
+    // This is for replaying the viedeo if users finish watching it
+    private var playerDidFinishObserver: NSObjectProtocol?
+    
     //MARK: - Init
     init(model: PostModel){
         self.model = model
@@ -184,6 +187,19 @@ class PostViewController: UIViewController {
         view.layer.addSublayer(playerLayer)
         player?.volume = 0
         player?.play()
+        
+        // Replay the video if users have watched til the end
+        guard let player = player else {
+            return
+        }
+        playerDidFinishObserver = NotificationCenter.default.addObserver(
+            forName: .AVPlayerItemDidPlayToEndTime,
+            object: player.currentItem,
+            queue: .main,
+            using: { _ in
+                player.seek(to: .zero)
+                player.play()
+            })
     }
     
     /*
