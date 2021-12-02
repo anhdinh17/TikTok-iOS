@@ -26,7 +26,6 @@ class TabBarViewController: UITabBarController {
                                                        identifier: "abc1234"))
         
         home.title = "Home"
-        explore.title = "Explore"
         notifications.title = "Notifications"
         profile.title = "Profile"
         
