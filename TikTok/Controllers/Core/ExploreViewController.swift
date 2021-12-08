@@ -69,22 +69,18 @@ class ExploreViewController: UIViewController {
         sections.append(ExploreSection(type: .banners,
                                        cells: cells))
         
+        var posts = [ExploreCell]()
+        for _ in 0...40 {
+            posts.append(ExploreCell.post(viewModel: ExplorePostViewModel(thumbnailImage: nil,
+                                                                          caption: "",
+                                                                          handler: {
+                
+            })))
+        }
+        
         // Trending posts
         sections.append(ExploreSection(type: .trendingPosts,
-                                       cells: [
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        })),
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        })),
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        })),
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        }))
-                                       ]))
+                                       cells: posts))
         
         // users
         sections.append(ExploreSection(type: .users,
@@ -214,6 +210,11 @@ class ExploreViewController: UIViewController {
         self.collectionView = collectionView
     }
     
+    /*
+     Function nay xet sectionType de xem case cua enum la gi,neu "sections" array co type la .banner thi se tao section(collectionView) nhu code, va cu nhu vay cho toi case .new
+     
+     thu tu xuat hien cua tung thang layout tren Collection view la do thu tu cua ExploreSection.type cua thang "sections" array. Vi du neu object dau tien cua sections co ExploreSection.type la .banner thi thang banner se xuat hien truoc tren collectionView, object tiep theo la .user thi layout cua .user xuat hien ke tiep.
+    */
     func layout(for section: Int) -> NSCollectionLayoutSection {
         // sectionType is an enum
         let sectionType = sections[section].type
@@ -241,27 +242,7 @@ class ExploreViewController: UIViewController {
             sectionLayout.orthogonalScrollingBehavior = .groupPaging // scrolling behavior
             
             return sectionLayout
-        case .trendingPosts:
-            // Item
-            let item = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension:.fractionalWidth(1),
-                    heightDimension:.fractionalHeight(1))
-            )
-            item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
-            
-            // Group
-            let group = NSCollectionLayoutGroup.horizontal(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.9),
-                    heightDimension: .absolute(200)),
-                subitems: [item])
-            
-            // Section
-            let sectionLayout = NSCollectionLayoutSection(group: group)
-            sectionLayout.orthogonalScrollingBehavior = .groupPaging // scrolling behavior
-            
-            return sectionLayout
+
         case .users:
             // Item
             let item = NSCollectionLayoutItem(
@@ -274,7 +255,7 @@ class ExploreViewController: UIViewController {
             // Group
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.9),
+                    widthDimension: .absolute(200),
                     heightDimension: .absolute(200)),
                 subitems: [item])
             
@@ -283,6 +264,7 @@ class ExploreViewController: UIViewController {
             sectionLayout.orthogonalScrollingBehavior = .groupPaging // scrolling behavior
             
             return sectionLayout
+            
         case .trendingHashtags:
             // Item
             let item = NSCollectionLayoutItem(
@@ -293,18 +275,18 @@ class ExploreViewController: UIViewController {
             item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
             
             // Group
-            let group = NSCollectionLayoutGroup.horizontal(
+            let verticalGroup = NSCollectionLayoutGroup.vertical(
                 layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.9),
-                    heightDimension: .absolute(200)),
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(60)),
                 subitems: [item])
             
             // Section
-            let sectionLayout = NSCollectionLayoutSection(group: group)
-            sectionLayout.orthogonalScrollingBehavior = .groupPaging // scrolling behavior
+            let sectionLayout = NSCollectionLayoutSection(group: verticalGroup)
             
             return sectionLayout
-        case .recommended:
+            
+        case .trendingPosts,.new,.recommended:
             // Item
             let item = NSCollectionLayoutItem(
                 layoutSize: NSCollectionLayoutSize(
@@ -314,17 +296,25 @@ class ExploreViewController: UIViewController {
             item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
             
             // Group
+            let verticalGroup = NSCollectionLayoutGroup.vertical(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .absolute(100),
+                    heightDimension: .absolute(240)),
+                subitem: item,
+                count: 2)
+            
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.9),
-                    heightDimension: .absolute(200)),
-                subitems: [item])
+                    widthDimension: .absolute(110),
+                    heightDimension: .absolute(240)),
+                subitems: [verticalGroup])
             
             // Section
             let sectionLayout = NSCollectionLayoutSection(group: group)
             sectionLayout.orthogonalScrollingBehavior = .groupPaging // scrolling behavior
             
             return sectionLayout
+            
         case .popular:
             // Item
             let item = NSCollectionLayoutItem(
@@ -337,31 +327,11 @@ class ExploreViewController: UIViewController {
             // Group
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.9),
+                    widthDimension: .absolute(110),
                     heightDimension: .absolute(200)),
-                subitems: [item])
-            
-            // Section
-            let sectionLayout = NSCollectionLayoutSection(group: group)
-            sectionLayout.orthogonalScrollingBehavior = .groupPaging // scrolling behavior
-            
-            return sectionLayout
-        case .new:
-            // Item
-            let item = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension:.fractionalWidth(1),
-                    heightDimension:.fractionalHeight(1))
+                subitems: [item]
             )
-            item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
-            
-            // Group
-            let group = NSCollectionLayoutGroup.horizontal(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.9),
-                    heightDimension: .absolute(200)),
-                subitems: [item])
-            
+
             // Section
             let sectionLayout = NSCollectionLayoutSection(group: group)
             sectionLayout.orthogonalScrollingBehavior = .groupPaging // scrolling behavior
@@ -379,14 +349,30 @@ extension ExploreViewController: UICollectionViewDelegate, UICollectionViewDataS
         return sections.count
     }
     
+    // Cai ma minh muon tim
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // sections[section] = ExploreSection.type
+        // sections[section].cells = array cua thang ExploreSection.cells
         return sections[section].cells.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         // Chua hieu dong nay co tac dung gi
+        // model la 1 enum
         let model = sections[indexPath.section].cells[indexPath.row]
+        
+        switch model {
+            
+        case .banner(let viewModel):
+            break
+        case .post(let viewModel):
+            break
+        case .hashtag(let viewModel):
+            break
+        case .user(let viewModel):
+            break
+        }
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         let color: [UIColor] = [
