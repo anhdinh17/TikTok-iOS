@@ -56,7 +56,7 @@ class ExploreViewController: UIViewController {
         // Create an array of ExploreCell.banner case
         for _ in 0...100 {
             let cell = ExploreCell.banner(viewModel: ExploreBannerViewModel(
-                image: nil,
+                image: UIImage(named: "test"),
                 title: "Foo",
                 handler:{
                     
@@ -71,7 +71,7 @@ class ExploreViewController: UIViewController {
         
         var posts = [ExploreCell]()
         for _ in 0...40 {
-            posts.append(ExploreCell.post(viewModel: ExplorePostViewModel(thumbnailImage: nil,
+            posts.append(ExploreCell.post(viewModel: ExplorePostViewModel(thumbnailImage: UIImage(named: "onePiece"),
                                                                           caption: "",
                                                                           handler: {
                 
@@ -201,15 +201,103 @@ class ExploreViewController: UIViewController {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: layout)
+        // general registration
         collectionView.register(UICollectionViewCell.self,
                                 forCellWithReuseIdentifier: "cell")
+        
+        // Register tat ca cac custom file
+        collectionView.register(ExploreBannerCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ExploreBannerCollectionViewCell.identifier)
+        collectionView.register(ExplorePostCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ExplorePostCollectionViewCell.identifier)
+        collectionView.register(ExploreUserCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ExploreUserCollectionViewCell.identifier)
+        collectionView.register(ExploreHashtagCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ExploreHashtagCollectionViewCell.identifier)
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         view.addSubview(collectionView)
         
         self.collectionView = collectionView
     }
+
+}
+
+//MARK: - CollectionView Delegate, DataSource
+extension ExploreViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return sections.count
+    }
+    
+    // Cai ma minh muon tim
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // sections[section] = ExploreSection.type
+        // sections[section].cells = array cua thang ExploreSection.cells
+        return sections[section].cells.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        // Chua hieu dong nay co tac dung gi
+        // sections[indexPath.section] la 1 ExploreSection
+        // model la 1 enum ExploreCell
+        let model = sections[indexPath.section].cells[indexPath.row]
+        
+        switch model {
+            
+        case .banner(let viewModel):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: ExploreBannerCollectionViewCell.identifier,
+                for: indexPath) as? ExploreBannerCollectionViewCell else {
+                return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+            }
+            cell.configure(with: viewModel)
+            return cell
+        case .post(let viewModel):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: ExplorePostCollectionViewCell.identifier,
+                for: indexPath) as? ExplorePostCollectionViewCell else {
+                return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+            }
+            cell.configure(with: viewModel)
+            return cell
+        case .hashtag(let viewModel):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: ExploreHashtagCollectionViewCell.identifier,
+                for: indexPath) as? ExploreHashtagCollectionViewCell else {
+                return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+            }
+            cell.configure(with: viewModel)
+            return cell
+        case .user(let viewModel):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: ExploreUserCollectionViewCell.identifier,
+                for: indexPath) as? ExploreUserCollectionViewCell else {
+                return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+            }
+            cell.configure(with: viewModel)
+            return cell
+        }
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        let color: [UIColor] = [
+            .red, .orange, .systemPink, .darkGray, .systemGreen, .systemBlue
+        ]
+        cell.backgroundColor = color.randomElement()
+        
+        return cell
+    }
+    
+    
+}
+
+extension ExploreViewController: UISearchBarDelegate {}
+
+
+//MARK: - Section Layouts of CollectionView
+extension ExploreViewController {
     /*
      Function nay xet sectionType de xem case cua enum la gi,neu "sections" array co type la .banner thi se tao section(collectionView) nhu code, va cu nhu vay cho toi case .new
      
@@ -339,51 +427,4 @@ class ExploreViewController: UIViewController {
             return sectionLayout
         }
     }
-    
 }
-
-//MARK: - CollectionView Delegate, DataSource
-extension ExploreViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections.count
-    }
-    
-    // Cai ma minh muon tim
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // sections[section] = ExploreSection.type
-        // sections[section].cells = array cua thang ExploreSection.cells
-        return sections[section].cells.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        // Chua hieu dong nay co tac dung gi
-        // model la 1 enum
-        let model = sections[indexPath.section].cells[indexPath.row]
-        
-        switch model {
-            
-        case .banner(let viewModel):
-            break
-        case .post(let viewModel):
-            break
-        case .hashtag(let viewModel):
-            break
-        case .user(let viewModel):
-            break
-        }
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        let color: [UIColor] = [
-            .red, .orange, .systemPink, .darkGray, .systemGreen, .systemBlue
-        ]
-        cell.backgroundColor = color.randomElement()
-        
-        return cell
-    }
-    
-    
-}
-
-extension ExploreViewController: UISearchBarDelegate {}

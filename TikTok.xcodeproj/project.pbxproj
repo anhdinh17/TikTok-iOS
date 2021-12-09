@@ -38,10 +38,14 @@
 		67BC6806273F6712004BFEBA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC6805273F6712004BFEBA /* Extensions.swift */; };
 		67BC68482744B022004BFEBA /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC68472744B022004BFEBA /* PostModel.swift */; };
 		67BC684A274CA706004BFEBA /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC6849274CA706004BFEBA /* CommentsViewController.swift */; };
-		67E1D847275C6580000451D1 /* ExploreBannarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E1D846275C6580000451D1 /* ExploreBannarViewModel.swift */; };
+		67E1D847275C6580000451D1 /* ExploreBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E1D846275C6580000451D1 /* ExploreBannerViewModel.swift */; };
 		67E1D849275C6604000451D1 /* ExplorePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E1D848275C6604000451D1 /* ExplorePostViewModel.swift */; };
 		67E1D84B275C6630000451D1 /* ExploreHashtagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E1D84A275C6630000451D1 /* ExploreHashtagViewModel.swift */; };
 		67E1D84D275C6659000451D1 /* ExploreUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E1D84C275C6659000451D1 /* ExploreUserViewModel.swift */; };
+		67E1D89B2761BC4B000451D1 /* ExploreBannerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E1D89A2761BC4A000451D1 /* ExploreBannerCollectionViewCell.swift */; };
+		67E1D89D2761BC5F000451D1 /* ExplorePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E1D89C2761BC5F000451D1 /* ExplorePostCollectionViewCell.swift */; };
+		67E1D89F2761BC6B000451D1 /* ExploreUserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E1D89E2761BC6B000451D1 /* ExploreUserCollectionViewCell.swift */; };
+		67E1D8A12761BC7A000451D1 /* ExploreHashtagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E1D8A02761BC7A000451D1 /* ExploreHashtagCollectionViewCell.swift */; };
 		97281E3EE179DB3E886CD772 /* Pods_TikTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310E03EC9CDDB541673B44E0 /* Pods_TikTok.framework */; };
 /* End PBXBuildFile section */
 
@@ -81,10 +85,14 @@
 		67BC6805273F6712004BFEBA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		67BC68472744B022004BFEBA /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		67BC6849274CA706004BFEBA /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
-		67E1D846275C6580000451D1 /* ExploreBannarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreBannarViewModel.swift; sourceTree = "<group>"; };
+		67E1D846275C6580000451D1 /* ExploreBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreBannerViewModel.swift; sourceTree = "<group>"; };
 		67E1D848275C6604000451D1 /* ExplorePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePostViewModel.swift; sourceTree = "<group>"; };
 		67E1D84A275C6630000451D1 /* ExploreHashtagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreHashtagViewModel.swift; sourceTree = "<group>"; };
 		67E1D84C275C6659000451D1 /* ExploreUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreUserViewModel.swift; sourceTree = "<group>"; };
+		67E1D89A2761BC4A000451D1 /* ExploreBannerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreBannerCollectionViewCell.swift; sourceTree = "<group>"; };
+		67E1D89C2761BC5F000451D1 /* ExplorePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePostCollectionViewCell.swift; sourceTree = "<group>"; };
+		67E1D89E2761BC6B000451D1 /* ExploreUserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreUserCollectionViewCell.swift; sourceTree = "<group>"; };
+		67E1D8A02761BC7A000451D1 /* ExploreHashtagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreHashtagCollectionViewCell.swift; sourceTree = "<group>"; };
 		6F7E1D6E41CC8E628E8122A1 /* Pods-TikTok.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TikTok.release.xcconfig"; path = "Target Support Files/Pods-TikTok/Pods-TikTok.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,7 +174,7 @@
 		67BC67DD2733854C004BFEBA /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				67E1D846275C6580000451D1 /* ExploreBannarViewModel.swift */,
+				67E1D846275C6580000451D1 /* ExploreBannerViewModel.swift */,
 				67E1D848275C6604000451D1 /* ExplorePostViewModel.swift */,
 				67E1D84A275C6630000451D1 /* ExploreHashtagViewModel.swift */,
 				67E1D84C275C6659000451D1 /* ExploreUserViewModel.swift */,
@@ -224,6 +232,10 @@
 			isa = PBXGroup;
 			children = (
 				679A0D0527508F1900BF1449 /* CommentTableViewCell.swift */,
+				67E1D89A2761BC4A000451D1 /* ExploreBannerCollectionViewCell.swift */,
+				67E1D89C2761BC5F000451D1 /* ExplorePostCollectionViewCell.swift */,
+				67E1D89E2761BC6B000451D1 /* ExploreUserCollectionViewCell.swift */,
+				67E1D8A02761BC7A000451D1 /* ExploreHashtagCollectionViewCell.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -392,16 +404,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				67BC680027338E0E004BFEBA /* HapticsManager.swift in Sources */,
+				67E1D8A12761BC7A000451D1 /* ExploreHashtagCollectionViewCell.swift in Sources */,
 				67BC68482744B022004BFEBA /* PostModel.swift in Sources */,
 				67BC684A274CA706004BFEBA /* CommentsViewController.swift in Sources */,
 				67A7AB4127589D8600E0D790 /* ExploreCell.swift in Sources */,
-				67E1D847275C6580000451D1 /* ExploreBannarViewModel.swift in Sources */,
+				67E1D847275C6580000451D1 /* ExploreBannerViewModel.swift in Sources */,
 				67BC67FC27338DC7004BFEBA /* DatabaseManager.swift in Sources */,
 				67BC67E227338950004BFEBA /* ExploreViewController.swift in Sources */,
 				67BC67EA273389CA004BFEBA /* UserListViewController.swift in Sources */,
 				67BC67F027338A0E004BFEBA /* SettingsViewController.swift in Sources */,
 				67BC67F827338D84004BFEBA /* APICaller.swift in Sources */,
 				67BC67F627338D57004BFEBA /* PostViewController.swift in Sources */,
+				67E1D89D2761BC5F000451D1 /* ExplorePostCollectionViewCell.swift in Sources */,
 				67BC6806273F6712004BFEBA /* Extensions.swift in Sources */,
 				67BC67E42733896B004BFEBA /* CameraViewController.swift in Sources */,
 				67E1D84B275C6630000451D1 /* ExploreHashtagViewModel.swift in Sources */,
@@ -411,6 +425,7 @@
 				67E1D849275C6604000451D1 /* ExplorePostViewModel.swift in Sources */,
 				67BC67FE27338DE6004BFEBA /* AuthenticationManager.swift in Sources */,
 				679A0D02274EE73D00BF1449 /* PostComment.swift in Sources */,
+				67E1D89F2761BC6B000451D1 /* ExploreUserCollectionViewCell.swift in Sources */,
 				67E1D84D275C6659000451D1 /* ExploreUserViewModel.swift in Sources */,
 				67BC67E627338988004BFEBA /* NotificationsViewController.swift in Sources */,
 				67BC67EC273389E3004BFEBA /* SignInViewController.swift in Sources */,
@@ -419,6 +434,7 @@
 				679A0D0627508F1900BF1449 /* CommentTableViewCell.swift in Sources */,
 				67BC67FA27338DA6004BFEBA /* StorageManager.swift in Sources */,
 				67A7AB3F27589D6400E0D790 /* ExploreSection.swift in Sources */,
+				67E1D89B2761BC4B000451D1 /* ExploreBannerCollectionViewCell.swift in Sources */,
 				67BC67C727324945004BFEBA /* AppDelegate.swift in Sources */,
 				67BC67C927324945004BFEBA /* SceneDelegate.swift in Sources */,
 				679A0D04274EE78000BF1449 /* User.swift in Sources */,
