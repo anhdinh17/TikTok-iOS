@@ -21,7 +21,7 @@ class ExploreViewController: UIViewController {
     private var sections = [ExploreSection]()
     
     private var collectionView: UICollectionView?
- 
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +31,7 @@ class ExploreViewController: UIViewController {
         setUpCollectionView()
         
         configureModels()
-
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -39,7 +39,7 @@ class ExploreViewController: UIViewController {
         
         collectionView?.frame = view.bounds
     }
-
+    
     //MARK: - Functions
     
     // set up Search Bar
@@ -72,9 +72,8 @@ class ExploreViewController: UIViewController {
         var posts = [ExploreCell]()
         for _ in 0...40 {
             posts.append(ExploreCell.post(viewModel: ExplorePostViewModel(thumbnailImage: UIImage(named: "onePiece"),
-                                                                          caption: "",
+                                                                          caption: "This is a long greate post",
                                                                           handler: {
-                
             })))
         }
         
@@ -86,25 +85,25 @@ class ExploreViewController: UIViewController {
         sections.append(ExploreSection(type: .users,
                                        cells: [
                                         .user(viewModel: ExploreUserViewModel(porfilePictureURL: nil,
-                                                                              username: "",
+                                                                              username: "Raymond Lam",
                                                                               followerCount: 0,
                                                                               handler: {
                                                                                   
                                                                               })),
                                         .user(viewModel: ExploreUserViewModel(porfilePictureURL: nil,
-                                                                              username: "",
+                                                                              username: "Bosco",
                                                                               followerCount: 0,
                                                                               handler: {
                                                                                   
                                                                               })),
                                         .user(viewModel: ExploreUserViewModel(porfilePictureURL: nil,
-                                                                              username: "",
+                                                                              username: "Myolie Wong",
                                                                               followerCount: 0,
                                                                               handler: {
                                                                                   
                                                                               })),
                                         .user(viewModel: ExploreUserViewModel(porfilePictureURL: nil,
-                                                                              username: "",
+                                                                              username: "Kate Tsui",
                                                                               followerCount: 0,
                                                                               handler: {
                                                                                   
@@ -115,25 +114,25 @@ class ExploreViewController: UIViewController {
         sections.append(ExploreSection(type: .trendingHashtags,
                                        cells: [
                                         .hashtag(viewModel: ExploreHashtagViewModel(text: "#foryou",
-                                                                                    icon: nil,
+                                                                                    icon: UIImage(systemName: "house"),
                                                                                     count: 1,
                                                                                     handler: {
                                                                                         
                                                                                     })),
-                                        .hashtag(viewModel: ExploreHashtagViewModel(text: "#foryou",
-                                                                                    icon: nil,
+                                        .hashtag(viewModel: ExploreHashtagViewModel(text: "#iphone13",
+                                                                                    icon: UIImage(systemName: "bell"),
                                                                                     count: 1,
                                                                                     handler: {
                                                                                         
                                                                                     })),
-                                        .hashtag(viewModel: ExploreHashtagViewModel(text: "#foryou",
-                                                                                    icon: nil,
+                                        .hashtag(viewModel: ExploreHashtagViewModel(text: "#tiktokcourse",
+                                                                                    icon: UIImage(systemName: "camera"),
                                                                                     count: 1,
                                                                                     handler: {
                                                                                         
                                                                                     })),
-                                        .hashtag(viewModel: ExploreHashtagViewModel(text: "#foryou",
-                                                                                    icon: nil,
+                                        .hashtag(viewModel: ExploreHashtagViewModel(text: "#M1Macbook",
+                                                                                    icon: UIImage(systemName: "airplane"),
                                                                                     count: 1,
                                                                                     handler: {
                                                                                         
@@ -141,55 +140,19 @@ class ExploreViewController: UIViewController {
                                        ]))
         
         // recommended
-        sections.append(ExploreSection(type: .recommended,
-                                       cells: [
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        })),
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        })),
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        })),
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        }))
-                                       ]))
+        sections.append(ExploreSection(
+            type: .recommended,
+            cells: posts
+        )
+        )
         
         // popular
         sections.append(ExploreSection(type: .popular,
-                                       cells: [
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        })),
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        })),
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        })),
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        }))
-                                       ]))
+                                       cells: posts))
         
         // new/crent
         sections.append(ExploreSection(type: .new,
-                                       cells: [
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        })),
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        })),
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        })),
-                                        .post(viewModel: ExplorePostViewModel(thumbnailImage: nil, caption: "", handler: {
-                                            
-                                        }))
-                                       ]))
+                                       cells: posts))
     }
     
     func setUpCollectionView(){
@@ -215,13 +178,14 @@ class ExploreViewController: UIViewController {
         collectionView.register(ExploreHashtagCollectionViewCell.self,
                                 forCellWithReuseIdentifier: ExploreHashtagCollectionViewCell.identifier)
         
+        collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self
         collectionView.dataSource = self
         view.addSubview(collectionView)
         
         self.collectionView = collectionView
     }
-
+    
 }
 
 //MARK: - CollectionView Delegate, DataSource
@@ -251,45 +215,55 @@ extension ExploreViewController: UICollectionViewDelegate, UICollectionViewDataS
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: ExploreBannerCollectionViewCell.identifier,
                 for: indexPath) as? ExploreBannerCollectionViewCell else {
-                return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-            }
+                    return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+                }
             cell.configure(with: viewModel)
             return cell
         case .post(let viewModel):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: ExplorePostCollectionViewCell.identifier,
                 for: indexPath) as? ExplorePostCollectionViewCell else {
-                return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-            }
+                    return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+                }
             cell.configure(with: viewModel)
             return cell
         case .hashtag(let viewModel):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: ExploreHashtagCollectionViewCell.identifier,
                 for: indexPath) as? ExploreHashtagCollectionViewCell else {
-                return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-            }
+                    return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+                }
             cell.configure(with: viewModel)
             return cell
         case .user(let viewModel):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: ExploreUserCollectionViewCell.identifier,
                 for: indexPath) as? ExploreUserCollectionViewCell else {
-                return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-            }
+                    return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+                }
             cell.configure(with: viewModel)
             return cell
         }
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        let color: [UIColor] = [
-            .red, .orange, .systemPink, .darkGray, .systemGreen, .systemBlue
-        ]
-        cell.backgroundColor = color.randomElement()
-        
-        return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        HapticsManager.shared.vibrateForSelection()
+        
+        let model = sections[indexPath.section].cells[indexPath.row]
+        
+        switch model {
+            
+        case .banner(let viewModel):
+            break
+        case .post(let viewModel):
+            break
+        case .hashtag(let viewModel):
+            break
+        case .user(let viewModel):
+            break
+        }
+    }
     
 }
 
@@ -302,7 +276,7 @@ extension ExploreViewController {
      Function nay xet sectionType de xem case cua enum la gi,neu "sections" array co type la .banner thi se tao section(collectionView) nhu code, va cu nhu vay cho toi case .new
      
      thu tu xuat hien cua tung thang layout tren Collection view la do thu tu cua ExploreSection.type cua thang "sections" array. Vi du neu object dau tien cua sections co ExploreSection.type la .banner thi thang banner se xuat hien truoc tren collectionView, object tiep theo la .user thi layout cua .user xuat hien ke tiep.
-    */
+     */
     func layout(for section: Int) -> NSCollectionLayoutSection {
         // sectionType is an enum
         let sectionType = sections[section].type
@@ -330,7 +304,7 @@ extension ExploreViewController {
             sectionLayout.orthogonalScrollingBehavior = .groupPaging // scrolling behavior
             
             return sectionLayout
-
+            
         case .users:
             // Item
             let item = NSCollectionLayoutItem(
@@ -343,13 +317,13 @@ extension ExploreViewController {
             // Group
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .absolute(200),
+                    widthDimension: .absolute(150),
                     heightDimension: .absolute(200)),
                 subitems: [item])
             
             // Section
             let sectionLayout = NSCollectionLayoutSection(group: group)
-            sectionLayout.orthogonalScrollingBehavior = .groupPaging // scrolling behavior
+            sectionLayout.orthogonalScrollingBehavior = .continuous // scrolling behavior
             
             return sectionLayout
             
@@ -387,14 +361,14 @@ extension ExploreViewController {
             let verticalGroup = NSCollectionLayoutGroup.vertical(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .absolute(100),
-                    heightDimension: .absolute(240)),
+                    heightDimension: .absolute(300)),
                 subitem: item,
                 count: 2)
             
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .absolute(110),
-                    heightDimension: .absolute(240)),
+                    heightDimension: .absolute(300)),
                 subitems: [verticalGroup])
             
             // Section
@@ -419,7 +393,7 @@ extension ExploreViewController {
                     heightDimension: .absolute(200)),
                 subitems: [item]
             )
-
+            
             // Section
             let sectionLayout = NSCollectionLayoutSection(group: group)
             sectionLayout.orthogonalScrollingBehavior = .groupPaging // scrolling behavior

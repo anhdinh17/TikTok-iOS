@@ -10,7 +10,7 @@ import UIKit
 
 struct ExploreHashtagViewModel {
     let text: String
-    let icon: String?
+    let icon: UIImage?
     let count: Int // number of posts associtated with tag
     let handler: (() -> Void)
 }

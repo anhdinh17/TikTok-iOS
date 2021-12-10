@@ -42,8 +42,15 @@ class ExplorePostCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        thumbNailImageView.frame = CGRect(x: 0, y: 0, width: contentView.width, height: contentView.height - 80)
-        captionLabel.frame = CGRect(x: 0, y: contentView.height - 80, width: contentView.width, height: 80)
+        let captionHeight = contentView.height / 5
+        thumbNailImageView.frame = CGRect(x: 0,
+                                          y: 0,
+                                          width: contentView.width,
+                                          height: contentView.height - captionHeight)
+        captionLabel.frame = CGRect(x: 0,
+                                    y: contentView.height - captionHeight,
+                                    width: contentView.width,
+                                    height: captionHeight)
     }
     
     override func prepareForReuse() {
