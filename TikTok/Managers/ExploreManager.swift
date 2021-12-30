@@ -27,6 +27,85 @@ final class ExploreManager {
         })
     }
     
+    public func getExploreCreators() -> [ExploreUserViewModel]{
+        guard let exploreData = parseExploreData() else {
+            return []
+        }
+        
+        // cach return nay hay
+        return exploreData.creators.compactMap({
+            ExploreUserViewModel(
+                porfilePicture: UIImage(named: $0.image),
+                username: $0.username,
+                followerCount: $0.followers_count
+            ) {
+                
+            }
+        })
+    }
+    
+    public func getExploreHashtags() -> [ExploreHashtagViewModel]{
+        guard let exploreData = parseExploreData() else {
+            return []
+        }
+        
+        // cach return nay hay
+        return exploreData.hashtags.compactMap({
+            ExploreHashtagViewModel(
+                text: "#" + $0.tag,
+                icon: UIImage(systemName: $0.image),
+                count: $0.count) {
+                    
+                }
+        })
+    }
+    
+    public func getExploreTrendingPosts() -> [ExplorePostViewModel]{
+        guard let exploreData = parseExploreData() else {
+            return []
+        }
+        
+        // cach return nay hay
+        return exploreData.trendingPosts.compactMap({
+            ExplorePostViewModel(
+                thumbnailImage: UIImage(named: $0.image),
+                caption: $0.caption) {
+                    
+                }
+        })
+    }
+    
+    public func getExploreRecentPosts() -> [ExplorePostViewModel]{
+        guard let exploreData = parseExploreData() else {
+            return []
+        }
+        
+        // cach return nay hay
+        return exploreData.recentPosts.compactMap({
+            ExplorePostViewModel(
+                thumbnailImage: UIImage(named: $0.image),
+                caption: $0.caption) {
+                    
+                }
+        })
+    }
+    
+    public func getExplorePopularPosts() -> [ExplorePostViewModel]{
+        guard let exploreData = parseExploreData() else {
+            return []
+        }
+        
+        // cach return nay hay
+        return exploreData.popular.compactMap({
+            ExplorePostViewModel(
+                thumbnailImage: UIImage(named: $0.image),
+                caption: $0.caption) {
+                    
+                }
+        })
+    }
+    
+    //MARK: - Private
     private func parseExploreData() -> ExploreResponse? {
         // fetch data from a json file in "Resource" folder
         guard let path = Bundle.main.path(forResource: "explore", ofType: "json") else {
@@ -44,6 +123,7 @@ final class ExploreManager {
     
 }
 
+//MARK: - Data Model
 struct ExploreResponse: Codable {
     let banners: [Banner]
     let trendingPosts: [Post]

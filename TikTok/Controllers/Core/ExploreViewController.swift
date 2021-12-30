@@ -58,95 +58,63 @@ class ExploreViewController: UIViewController {
             ExploreSection(
                 type: .banners,
                 cells: ExploreManager.shared.getExploreBanner().compactMap({
-                    return ExploreCell.banner(viewModel: $0)
+                     return ExploreCell.banner(viewModel: $0)
                 })
             ) 
         )
-        
-        var posts = [ExploreCell]()
-        for _ in 0...40 {
-            posts.append(ExploreCell.post(viewModel: ExplorePostViewModel(thumbnailImage: UIImage(named: "onePiece"),
-                                                                          caption: "This is a long greate post",
-                                                                          handler: {
-            })))
-        }
-        
+
         // Trending posts
-        sections.append(ExploreSection(type: .trendingPosts,
-                                       cells: posts))
+        sections.append(ExploreSection(
+            type: .trendingPosts,
+            cells: ExploreManager.shared.getExploreTrendingPosts().compactMap({
+                return ExploreCell.post(viewModel: $0)
+            })
+        )
+        )
         
         // users
-        sections.append(ExploreSection(type: .users,
-                                       cells: [
-                                        .user(viewModel: ExploreUserViewModel(porfilePictureURL: nil,
-                                                                              username: "Raymond Lam",
-                                                                              followerCount: 0,
-                                                                              handler: {
-                                                                                  
-                                                                              })),
-                                        .user(viewModel: ExploreUserViewModel(porfilePictureURL: nil,
-                                                                              username: "Bosco",
-                                                                              followerCount: 0,
-                                                                              handler: {
-                                                                                  
-                                                                              })),
-                                        .user(viewModel: ExploreUserViewModel(porfilePictureURL: nil,
-                                                                              username: "Myolie Wong",
-                                                                              followerCount: 0,
-                                                                              handler: {
-                                                                                  
-                                                                              })),
-                                        .user(viewModel: ExploreUserViewModel(porfilePictureURL: nil,
-                                                                              username: "Kate Tsui",
-                                                                              followerCount: 0,
-                                                                              handler: {
-                                                                                  
-                                                                              }))
-                                       ]))
+        sections.append(ExploreSection(
+            type: .users,
+            cells: ExploreManager.shared.getExploreCreators().compactMap({
+                return ExploreCell.user(viewModel: $0)
+            })
+        )
+        )
         
         // trending hashtags
-        sections.append(ExploreSection(type: .trendingHashtags,
-                                       cells: [
-                                        .hashtag(viewModel: ExploreHashtagViewModel(text: "#foryou",
-                                                                                    icon: UIImage(systemName: "house"),
-                                                                                    count: 1,
-                                                                                    handler: {
-                                                                                        
-                                                                                    })),
-                                        .hashtag(viewModel: ExploreHashtagViewModel(text: "#iphone13",
-                                                                                    icon: UIImage(systemName: "bell"),
-                                                                                    count: 1,
-                                                                                    handler: {
-                                                                                        
-                                                                                    })),
-                                        .hashtag(viewModel: ExploreHashtagViewModel(text: "#tiktokcourse",
-                                                                                    icon: UIImage(systemName: "camera"),
-                                                                                    count: 1,
-                                                                                    handler: {
-                                                                                        
-                                                                                    })),
-                                        .hashtag(viewModel: ExploreHashtagViewModel(text: "#M1Macbook",
-                                                                                    icon: UIImage(systemName: "airplane"),
-                                                                                    count: 1,
-                                                                                    handler: {
-                                                                                        
-                                                                                    }))
-                                       ]))
-        
-        // recommended
         sections.append(ExploreSection(
-            type: .recommended,
-            cells: posts
-        )
-        )
+            type: .trendingHashtags,
+            cells: ExploreManager.shared.getExploreHashtags().compactMap({
+                return ExploreCell.hashtag(viewModel: $0)
+            })
+        ))
+        
+//        // recommended
+//        sections.append(ExploreSection(
+//            type: .recommended,
+//            cells: ExploreManager.shared.getExplorePopularPosts().compactMap({
+//                return ExploreCell.post(viewModel: $0)
+//            })
+//        )
+//        )
         
         // popular
-        sections.append(ExploreSection(type: .popular,
-                                       cells: posts))
+        sections.append(ExploreSection(
+            type: .popular,
+            cells: ExploreManager.shared.getExplorePopularPosts().compactMap({
+                return ExploreCell.post(viewModel: $0)
+            })
+        )
+        )
         
         // new/crent
-        sections.append(ExploreSection(type: .new,
-                                       cells: posts))
+        sections.append(ExploreSection(
+            type: .new,
+            cells: ExploreManager.shared.getExploreRecentPosts().compactMap({
+                return ExploreCell.post(viewModel: $0)
+            })
+        )
+        )
     }
     
     func setUpCollectionView(){
