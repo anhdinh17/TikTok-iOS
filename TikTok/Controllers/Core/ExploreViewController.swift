@@ -51,23 +51,17 @@ class ExploreViewController: UIViewController {
     
     // mocking sections array
     func configureModels(){
-        var cells = [ExploreCell]()
-        
-        // Create an array of ExploreCell.banner case
-        for _ in 0...100 {
-            let cell = ExploreCell.banner(viewModel: ExploreBannerViewModel(
-                image: UIImage(named: "test"),
-                title: "Foo",
-                handler:{
-                    
-                }))
-            cells.append(cell)
-        }
         
         // add to sections, this sections now have ExploreSection of type .banner and cells is an array of .banner
         // hieu don gian, type: .banner thi cells cung la array cua .banner
-        sections.append(ExploreSection(type: .banners,
-                                       cells: cells))
+        sections.append(
+            ExploreSection(
+                type: .banners,
+                cells: ExploreManager.shared.getExploreBanner().compactMap({
+                    return ExploreCell.banner(viewModel: $0)
+                })
+            ) 
+        )
         
         var posts = [ExploreCell]()
         for _ in 0...40 {
