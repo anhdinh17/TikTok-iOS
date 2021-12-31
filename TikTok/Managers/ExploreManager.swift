@@ -8,8 +8,21 @@
 import Foundation
 import UIKit
 
+protocol ExploreManagerDelegate: AnyObject {
+    func pushViewController(_ vc: UIViewController)
+    func didTapHashtag(_ hashtag: String)
+}
+
 final class ExploreManager {
     static let shared = ExploreManager()
+    
+    weak var delegate: ExploreManagerDelegate?
+    
+    enum BannerAction: String {
+        case post
+        case hashtag
+        case user
+    }
     
     public func getExploreBanner() -> [ExploreBannerViewModel]{
         guard let exploreData = parseExploreData() else {
@@ -18,11 +31,27 @@ final class ExploreManager {
         
         // cach return nay hay
         // exploreData.banners.compactMap tra ve 1 array cua ExploreBannerViewModel
-        return exploreData.banners.compactMap({
+        return exploreData.banners.compactMap({ model in
             ExploreBannerViewModel(
-                image: UIImage(named: $0.image),
-                title: $0.title) {
-                    // empty for now
+                image: UIImage(named: model.image),
+                title: model.title) { [weak self] in
+                    guard let action = BannerAction(rawValue: model.action) else {
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        let vc = UIViewController()
+                        vc.view.backgroundColor = .red
+                        vc.title = action.rawValue.uppercased()
+                        self?.delegate?.pushViewController(vc)
+                    }
+                    switch action {
+                    case .post:
+                        break
+                    case .hashtag:
+                        break
+                    case .user:
+                        break
+                    }
                 }
         })
     }
@@ -33,13 +62,18 @@ final class ExploreManager {
         }
         
         // cach return nay hay
-        return exploreData.creators.compactMap({
+        return exploreData.creators.compactMap({ model in
             ExploreUserViewModel(
-                porfilePicture: UIImage(named: $0.image),
-                username: $0.username,
-                followerCount: $0.followers_count
-            ) {
-                
+                porfilePicture: UIImage(named: model.image),
+                username: model.username,
+                followerCount: model.followers_count
+            ) { [weak self] in
+                DispatchQueue.main.async {
+                    let userId = model.id
+                    // Fetch user object from Firebase
+                    let vc = ProfileViewController(user: User(userName: "Joe", profilePictureUrl: nil, identifier: userId))
+                    self?.delegate?.pushViewController(vc)
+                }
             }
         })
     }
@@ -50,12 +84,14 @@ final class ExploreManager {
         }
         
         // cach return nay hay
-        return exploreData.hashtags.compactMap({
+        return exploreData.hashtags.compactMap({ model in
             ExploreHashtagViewModel(
-                text: "#" + $0.tag,
-                icon: UIImage(systemName: $0.image),
-                count: $0.count) {
-                    
+                text: "#" + model.tag,
+                icon: UIImage(systemName: model.image),
+                count: model.count) { [weak self] in
+                    DispatchQueue.main.async {
+                        self?.delegate?.didTapHashtag(model.tag)
+                    }
                 }
         })
     }
@@ -66,11 +102,16 @@ final class ExploreManager {
         }
         
         // cach return nay hay
-        return exploreData.trendingPosts.compactMap({
+        return exploreData.trendingPosts.compactMap({ model in
             ExplorePostViewModel(
-                thumbnailImage: UIImage(named: $0.image),
-                caption: $0.caption) {
-                    
+                thumbnailImage: UIImage(named: model.image),
+                caption: model.caption) { [weak self] in
+                    DispatchQueue.main.async {
+                        // use id to fetch post from Firebase
+                        let postID = model.id
+                        let vc = PostViewController(model: PostModel(identifier: postID))
+                        self?.delegate?.pushViewController(vc)
+                    }
                 }
         })
     }
@@ -81,11 +122,16 @@ final class ExploreManager {
         }
         
         // cach return nay hay
-        return exploreData.recentPosts.compactMap({
+        return exploreData.recentPosts.compactMap({ model in
             ExplorePostViewModel(
-                thumbnailImage: UIImage(named: $0.image),
-                caption: $0.caption) {
-                    
+                thumbnailImage: UIImage(named: model.image),
+                caption: model.caption) {[weak self] in
+                    DispatchQueue.main.async {
+                        // use id to fetch post from Firebase
+                        let postID = model.id
+                        let vc = PostViewController(model: PostModel(identifier: postID))
+                        self?.delegate?.pushViewController(vc)
+                    }
                 }
         })
     }
@@ -96,11 +142,16 @@ final class ExploreManager {
         }
         
         // cach return nay hay
-        return exploreData.popular.compactMap({
+        return exploreData.popular.compactMap({ model in
             ExplorePostViewModel(
-                thumbnailImage: UIImage(named: $0.image),
-                caption: $0.caption) {
-                    
+                thumbnailImage: UIImage(named: model.image),
+                caption: model.caption) {[weak self] in
+                    DispatchQueue.main.async {
+                        // use id to fetch post from Firebase
+                        let postID = model.id
+                        let vc = PostViewController(model: PostModel(identifier: postID))
+                        self?.delegate?.pushViewController(vc)
+                    }
                 }
         })
     }

@@ -32,6 +32,7 @@ class ExploreViewController: UIViewController {
         
         configureModels()
         
+        ExploreManager.shared.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -168,6 +169,7 @@ extension ExploreViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         // Chua hieu dong nay co tac dung gi
         // sections[indexPath.section] la 1 ExploreSection
+        // sections[indexPath.section].cell is array of ExploreCell
         // model la 1 enum ExploreCell
         let model = sections[indexPath.section].cells[indexPath.row]
         
@@ -212,24 +214,46 @@ extension ExploreViewController: UICollectionViewDelegate, UICollectionViewDataS
         collectionView.deselectItem(at: indexPath, animated: true)
         HapticsManager.shared.vibrateForSelection()
         
+        // sections[indexPath.section] la 1 ExploreSection
+        // sections[indexPath.section].cell is array of ExploreCell
+        // model la 1 enum ExploreCell
         let model = sections[indexPath.section].cells[indexPath.row]
         
         switch model {
             
         case .banner(let viewModel):
-            break
+            viewModel.handler()
         case .post(let viewModel):
-            break
+            viewModel.handler()
         case .hashtag(let viewModel):
-            break
+            viewModel.handler()
         case .user(let viewModel):
-            break
+            viewModel.handler()
         }
     }
     
 }
 
-extension ExploreViewController: UISearchBarDelegate {}
+//MARK: - SearchBar Delegate
+extension ExploreViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel",
+                                                            style: .done,
+                                                            target: self,
+                                                            action: #selector(didTapCancel))
+    }
+    
+    @objc func didTapCancel(){
+        navigationItem.rightBarButtonItem = nil // dismiss cancel button
+        searchBar.text = nil
+        searchBar.resignFirstResponder() // resign keyboard
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        navigationItem.rightBarButtonItem = nil
+        searchBar.resignFirstResponder() // resign keyboard when tapping search button
+    }
+}
 
 
 //MARK: - Section Layouts of CollectionView
@@ -362,5 +386,17 @@ extension ExploreViewController {
             
             return sectionLayout
         }
+    }
+}
+
+//MARK: - Delegate from ExploreManager
+extension ExploreViewController: ExploreManagerDelegate {
+    func didTapHashtag(_ hashtag: String) {
+        searchBar.text = hashtag
+        searchBar.becomeFirstResponder()
+    }
+    
+    func pushViewController(_ vc: UIViewController) {
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
