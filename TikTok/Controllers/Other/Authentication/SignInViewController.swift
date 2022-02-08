@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class SignInViewController: UIViewController, UITextFieldDelegate {
 
@@ -35,12 +36,18 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         title = "Sign in"
         addSubviews()
         configureButton()
-        emailField.delegate = self
-        passwordField.delegate = self
+        configureFields()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        let imageSize: CGFloat = 100
+        logoImageView.frame = CGRect(x: (view.width-imageSize)/2, y: view.safeAreaInsets.top + 5, width: imageSize, height: imageSize)
+        emailField.frame = CGRect(x: 20, y: logoImageView.bottom + 10, width: view.width - 40, height: 55)
+        passwordField.frame = CGRect(x: 20, y: emailField.bottom + 5, width: view.width - 40, height: 55)
+        signInButton.frame = CGRect(x: 20, y: passwordField.bottom + 25, width: view.width-40, height: 55)
+        forgotPassword.frame = CGRect(x: 20, y: signInButton.bottom + 20, width: view.width-40, height: 55)
+        signUpButton.frame = CGRect(x: 20, y: forgotPassword.bottom + 20, width: view.width-40, height: 55)
     }
     
     func addSubviews(){
@@ -52,6 +59,21 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(forgotPassword)
     }
     
+    func configureFields(){
+        emailField.delegate = self
+        passwordField.delegate = self
+        // Add a toolbar on top of keyboard
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.width, height: 50))
+        toolbar.items = [
+            // Add space between items on toolbar, if we only have 1 item, then it's pushed all the way to the right.
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+            UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(didTapKeyboardDone))
+        ]
+        emailField.inputAccessoryView = toolbar
+        passwordField.inputAccessoryView = toolbar
+        
+    }
+    
     func configureButton(){
         signInButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
         signUpButton.addTarget(self, action: #selector(didTapSignUp), for: .touchUpInside)
@@ -61,9 +83,45 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     //=======================================================================================================
     //MARK: Actions
     //=======================================================================================================
-    @objc func didTapSignIn(){}
+    @objc func didTapSignIn(){
+        didTapKeyboardDone()
+        guard let email = emailField.text,
+              let password = passwordField.text,
+              !email.trimmingCharacters(in: .whitespaces).isEmpty,
+              !password.trimmingCharacters(in: .whitespaces).isEmpty else {
+                  // alert for wrong email/password
+                  let alert = UIAlertController(title: "Invalid Email/Password", message: "Please enter valid email and password to sign in", preferredStyle: .alert)
+                  alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                  present(alert,animated: true)
+                  return
+              }
+        AuthManager.shared.signIn(with: email, password: password) { success in
+            if success{
+                // Do after successfully sign in
+            } else {
+                
+            }
+        }
+    }
     
-    @objc func didTapSignUp(){}
+    @objc func didTapSignUp(){
+        didTapKeyboardDone()
+        let vc = SignUpViewController()
+        vc.title = "Create Account"
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
-    @objc func didTapForgotPassword(){}
+    @objc func didTapForgotPassword(){
+        didTapKeyboardDone()
+        guard let url = URL(string: "https://www.tiktok.com") else {
+            return
+        }
+        let vc = SFSafariViewController(url: url)
+        present(vc,animated: true)
+    }
+    
+    @objc func didTapKeyboardDone(){
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+    }
 }
