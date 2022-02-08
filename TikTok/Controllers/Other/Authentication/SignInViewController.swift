@@ -69,6 +69,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
             UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(didTapKeyboardDone))
         ]
+        // Add tool bar to textFields
         emailField.inputAccessoryView = toolbar
         passwordField.inputAccessoryView = toolbar
         
