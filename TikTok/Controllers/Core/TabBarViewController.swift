@@ -9,12 +9,35 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
 
+    private var signInPresented = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         setUpControllers()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !signInPresented{
+            presentSignInIfNeeded()
+        }
+    }
+    
+    func presentSignInIfNeeded(){
+        // if user is not signed in
+        if !AuthManager.shared.isSignedIn{
+            signInPresented = true
+            let vc = SignInViewController()
+            // van chua hieu tai sao can completion nay
+            vc.completion = {[weak self] in
+                self?.signInPresented = false
+            }
+            let navVC = UINavigationController(rootViewController: vc)
+            navVC.modalPresentationStyle = .fullScreen
+            present(navVC,animated: false,completion: nil)
+        }
+    }
+    
     // This func is to set up tab bar
     private func setUpControllers(){
         let home = HomeViewController()

@@ -60,6 +60,7 @@ class HomeViewController: UIViewController {
         horizontalScrollView.contentOffset = CGPoint(x: view.width, y: 0)
         // deleage of UIScrollView
         horizontalScrollView.delegate = self
+        horizontalScrollView.contentInsetAdjustmentBehavior = .never
         
         setUpFeed()
         
