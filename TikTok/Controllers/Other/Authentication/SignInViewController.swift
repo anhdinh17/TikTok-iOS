@@ -9,9 +9,7 @@ import UIKit
 import SafariServices
 
 class SignInViewController: UIViewController, UITextFieldDelegate {
-
     var completion: (()->Void)?
-    
     private let logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -20,7 +18,6 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         imageView.image = UIImage(named: "logo")
         return imageView
     }()
-    
     private let emailField = AuthField(type: .email)
     private let passwordField = AuthField(type: .password)
     private let signInButton = AuthButton(type: .signIn, title: nil)
@@ -39,6 +36,12 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         configureFields()
     }
 
+    // When page appears, keyboard of email field automatically shows up.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        emailField.becomeFirstResponder()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let imageSize: CGFloat = 100
@@ -89,13 +92,14 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         guard let email = emailField.text,
               let password = passwordField.text,
               !email.trimmingCharacters(in: .whitespaces).isEmpty,
-              !password.trimmingCharacters(in: .whitespaces).isEmpty else {
-                  // alert for wrong email/password
-                  let alert = UIAlertController(title: "Invalid Email/Password", message: "Please enter valid email and password to sign in", preferredStyle: .alert)
-                  alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-                  present(alert,animated: true)
-                  return
-              }
+              !password.trimmingCharacters(in: .whitespaces).isEmpty,
+              password.count >= 6 else {
+            // alert for wrong email/password
+            let alert = UIAlertController(title: "Invalid Email/Password", message: "Please enter valid email and password to sign in", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            present(alert,animated: true)
+            return
+        }
         AuthManager.shared.signIn(with: email, password: password) { success in
             if success{
                 // Do after successfully sign in

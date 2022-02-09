@@ -22,7 +22,7 @@ class AuthButton: UIButton {
     }
     
     let type: ButtonType
-    
+
     // init with optional title in case if users want to give the button a title
     // or else we use the enum to set title
     init(type: ButtonType, title:String?){
