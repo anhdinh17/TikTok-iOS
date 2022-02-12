@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import AVFoundation
 
 final class AuthManager {
     public static let shared = AuthManager()
@@ -24,10 +25,34 @@ final class AuthManager {
         return Auth.auth().currentUser != nil
     }
     
+    // Error Enum
+    enum AuthError: Error {
+        case signInFailed
+    }
+
+    //=======================================================================================================
+    //MARK: Functions
+    //=======================================================================================================
+    
+    // Func to sign in using email, password, completion tra  ve 1 Result<>
     public func signIn(with email: String,
                        password: String,
-                       completion: @escaping (Bool)->Void){
-        
+                       completion: @escaping (Result<String,Error>)->Void){
+        // Auth framwork func to sign in
+        Auth.auth().signIn(withEmail: email,
+                           password: password) { result, error in
+            guard result != nil, error == nil else {
+                if let error = error {
+                    completion(.failure(error))
+                }else {
+                    completion(.failure(AuthError.signInFailed))
+                }
+                return
+            }
+            // Neu sign in thanh cong (result != nil)
+            // Tra ve 1 String(email) cho success case
+            completion(.success(email))
+        }
     }
     
     public func signUp(

@@ -50,8 +50,10 @@ class AuthField: UITextField {
         autocorrectionType = .no
         if type == .password{
             isSecureTextEntry = true
+            textContentType = .oneTimeCode
         } else if type == .email {
             keyboardType = .emailAddress
+            textContentType = .emailAddress
         }
     }
 }
