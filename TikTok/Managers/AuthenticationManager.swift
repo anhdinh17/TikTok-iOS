@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseAuth
 import AVFoundation
+import UIKit
 
 final class AuthManager {
     public static let shared = AuthManager()
@@ -60,7 +61,14 @@ final class AuthManager {
         emailAddress: String,
         password: String,
         completion: @escaping (Bool)->Void){
-        
+            Auth.auth().createUser(withEmail: emailAddress, password: password) { result, error in
+                guard result != nil, error == nil else {
+                    completion(false)
+                    return
+                } 
+            }
+            
+            DatabaseManager.shared.insertUser(with: emailAddress, username: username, completion: completion)
     }
     
     public func signOut(completion: (Bool)->Void){
