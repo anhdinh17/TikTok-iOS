@@ -106,11 +106,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             present(alert, animated: true)
             return
         }
-        AuthManager.shared.signUp(with: username, emailAddress: email, password: password) { success in
-            if success {
-                
-            }else {
-                
+        AuthManager.shared.signUp(with: username, emailAddress: email, password: password) { [weak self]  success in
+            DispatchQueue.main.async {
+                if success {
+                    self?.dismiss(animated: true, completion: nil)
+                }else {
+                    let alert = UIAlertController(title: "Sign Up Failed", message: "Something went wrong when trying to create an account for you.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                    self?.present(alert, animated: true)
+                }
             }
         }
     }

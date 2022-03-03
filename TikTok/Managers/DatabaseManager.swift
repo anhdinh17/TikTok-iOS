@@ -16,14 +16,23 @@ final class DatabaseManager {
     
     private init(){}
     
+    public func createRootUser(){
+        // Tạo root node "users" với 1 child node
+        database.child("users").setValue(
+            [
+                "emai": "anhdinh17@gmail.com"
+            ]
+        )
+    }
+    
     public func insertUser(with email: String, username:String, completion: @escaping(Bool)->Void){
-        // get current user key
-        // insert new entry
-        // create root users
         database.child("users").observeSingleEvent(of: .value) { [weak self] snapshot in
+            print("This is snapshot: \(snapshot)")
+            print("Snapshot.value: \(snapshot.value)")
             guard var usersDictionary = snapshot.value as? [String: Any] else {
-                // create users root node
+                // create users root node if we don't have the root node "users" yet.
                 self?.database.child("users").setValue(
+                    // this is the structure we want
                     [
                         username:[
                             "emai": email
@@ -38,8 +47,10 @@ final class DatabaseManager {
                 }
                 return
             }
+            // set new username node and its dictionary "email": email address
             usersDictionary[username] = ["email":email]
-            // save new users object
+            // save new users object (username node and its value)
+            // save new username---email: "email address"
             self?.database.child("users").setValue(usersDictionary, withCompletionBlock: { error, _ in
                 guard error == nil else {
                     completion(false)

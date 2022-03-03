@@ -29,6 +29,7 @@ class TabBarViewController: UITabBarController {
             signInPresented = true
             let vc = SignInViewController()
             // van chua hieu tai sao can completion nay
+            //----> tạm hiểu: sau khi tạo SignInVC xong và đi đến đó, trả lại signInPresented thành false
             vc.completion = {[weak self] in
                 self?.signInPresented = false
             }

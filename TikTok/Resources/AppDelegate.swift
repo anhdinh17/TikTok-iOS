@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
         
         FirebaseApp.configure()
+        do{
+            try Auth.auth().signOut()
+        }catch{
+            print("Error: \(Error.self)")
+        }
+        
+//        AuthManager.shared.signOut { _ in
+//            
+//        }
         
         return true
     }

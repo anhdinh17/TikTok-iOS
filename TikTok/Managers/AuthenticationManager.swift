@@ -61,13 +61,15 @@ final class AuthManager {
         emailAddress: String,
         password: String,
         completion: @escaping (Bool)->Void){
+            // Using Firebase Authentication framework to create accout
             Auth.auth().createUser(withEmail: emailAddress, password: password) { result, error in
                 guard result != nil, error == nil else {
                     completion(false)
                     return
-                } 
+                }
+                completion(true)
             }
-            
+            // After creating account, add that email and username into Firebase Database
             DatabaseManager.shared.insertUser(with: emailAddress, username: username, completion: completion)
     }
     

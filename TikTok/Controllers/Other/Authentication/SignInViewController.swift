@@ -34,6 +34,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         addSubviews()
         configureButton()
         configureFields()
+        //DatabaseManager.shared.createRootUser()
     }
 
     // When page appears, keyboard of email field automatically shows up.
@@ -104,7 +105,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
             DispatchQueue.main.async {
                 switch result {
                 case.success(let email):
-                    print(email)
+                    self?.dismiss(animated: true, completion: nil)
                 case .failure(let error):
                     print(error)
                     let alert = UIAlertController(title: "Sign In Failed", message: "Please enter valid email and password to sign in", preferredStyle: .alert)
