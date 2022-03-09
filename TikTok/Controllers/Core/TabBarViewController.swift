@@ -58,6 +58,7 @@ class TabBarViewController: UITabBarController {
         let nav2 = UINavigationController(rootViewController: explore)
         let nav3 = UINavigationController(rootViewController: notifications)
         let nav4 = UINavigationController(rootViewController: profile)
+        let cameraNav = UINavigationController(rootViewController: camera)
         
         // Set image for each item
         nav1.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "house"), tag: 1)
@@ -71,16 +72,23 @@ class TabBarViewController: UITabBarController {
         nav1.navigationBar.setBackgroundImage(UIImage(), for: .default)
         nav1.navigationBar.shadowImage = UIImage()
         
+        // Make cameraNav clear background color
+        cameraNav.navigationBar.backgroundColor = .clear
+        cameraNav.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        cameraNav.navigationBar.shadowImage = UIImage()
+        
         /*  we can use this way to set up tab bar items if we don't want navigationBar
+         
         home.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "house"), tag: 1)
         explore.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "safari"), tag: 2)
         camera.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "camera"), tag: 3)
         notifications.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "bell"), tag: 4)
         profile.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "person.circle"), tag: 5)
+         
          */
         
         // Set the order of tab bar items
-        setViewControllers([nav1,nav2,camera,nav3,nav4], animated: false)
+        setViewControllers([nav1,nav2,cameraNav,nav3,nav4], animated: false)
         
     }
     
