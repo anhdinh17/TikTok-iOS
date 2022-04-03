@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6752D1A227B2327F0095155E /* AuthField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6752D1A127B2327F0095155E /* AuthField.swift */; };
 		6752D1A427B232960095155E /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6752D1A327B232960095155E /* AuthButton.swift */; };
+		678983C127F5638A0073D0E8 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678983C027F5638A0073D0E8 /* RecordButton.swift */; };
 		679A0D02274EE73D00BF1449 /* PostComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679A0D01274EE73D00BF1449 /* PostComment.swift */; };
 		679A0D04274EE78000BF1449 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679A0D03274EE78000BF1449 /* User.swift */; };
 		679A0D0627508F1900BF1449 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679A0D0527508F1900BF1449 /* CommentTableViewCell.swift */; };
@@ -58,6 +59,7 @@
 		310E03EC9CDDB541673B44E0 /* Pods_TikTok.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TikTok.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6752D1A127B2327F0095155E /* AuthField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthField.swift; sourceTree = "<group>"; };
 		6752D1A327B232960095155E /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
+		678983C027F5638A0073D0E8 /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		679A0D01274EE73D00BF1449 /* PostComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostComment.swift; sourceTree = "<group>"; };
 		679A0D03274EE78000BF1449 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		679A0D0527508F1900BF1449 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				67E1D8A02761BC7A000451D1 /* ExploreHashtagCollectionViewCell.swift */,
 				6752D1A127B2327F0095155E /* AuthField.swift */,
 				6752D1A327B232960095155E /* AuthButton.swift */,
+				678983C027F5638A0073D0E8 /* RecordButton.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				67BC6806273F6712004BFEBA /* Extensions.swift in Sources */,
 				67BC67E42733896B004BFEBA /* CameraViewController.swift in Sources */,
 				6752D1A227B2327F0095155E /* AuthField.swift in Sources */,
+				678983C127F5638A0073D0E8 /* RecordButton.swift in Sources */,
 				67E1D84B275C6630000451D1 /* ExploreHashtagViewModel.swift in Sources */,
 				67BC67F227338A58004BFEBA /* TabBarViewController.swift in Sources */,
 				67BC67CB27324945004BFEBA /* HomeViewController.swift in Sources */,
