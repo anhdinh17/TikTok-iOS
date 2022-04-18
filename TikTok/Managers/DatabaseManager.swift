@@ -82,7 +82,7 @@ final class DatabaseManager {
     /**
     Insert a video into Realtime Database
     */
-    public func insertPost(fileName: String, completion: @escaping (Bool) -> Void){
+    public func insertPost(fileName: String, caption: String, completion: @escaping (Bool) -> Void){
         guard let username = UserDefaults.standard.string(forKey: "username") else {
             return
         }
@@ -96,10 +96,15 @@ final class DatabaseManager {
             value/snapshot.value is the dictionary tree under username in Realtime Database
              */
             
+            // create the structure of the "post"
+            let newEntry = [
+                "name": fileName,
+                "caption": caption
+            ]
             // Nếu đã có dictionary "posts" rồi
-            if var posts = value["posts"] as? [String]{
-                // append a new video id to array
-                posts.append(fileName)
+            if var posts = value["posts"] as? [[String:Any]]{
+                // append a new video id, caption to array
+                posts.append(newEntry)
                 value["posts"] = posts
                 // set value mới cho path này
                 self?.database.child("users").child(username).setValue(value){ error, _ in
@@ -110,10 +115,12 @@ final class DatabaseManager {
                     completion(true)
                 }
             } else {
-                // Nếu chưa có dictionary "posts"
+                // Nếu chưa có node "posts", thì tạo node "post"
+                // node "post" sẽ là array of dictionary of newEntry that we create above
                 // fileName là id của từng thằng video
-                // value của posts là array of String.
-                value["posts"] = [fileName]
+                // Mình set value của posts là array of Dictionary --> [newEntry]
+                value["posts"] = [newEntry]
+                // setValue(value) to create data -- this is syntax
                 self?.database.child("users").child(username).setValue(value){ error, _ in
                     guard error == nil else {
                         completion(false)
@@ -130,10 +137,14 @@ final class DatabaseManager {
     }
 }
 //=======================================================================================================
-//MARK: NOTE
+//MARK: NOTES
 //=======================================================================================================
 /*
                 [username:[String:Any]]
  
                 post
+*/
+/*
+Cách tạo data trong realtime Database, chú ý quan trọng là cái structure mà mình tự tạo ra để data sắp xếp theo ý mình muốn.
+Trong realtime Database, mình có thể set data trong mỗi node theo ý mình, i.e dictionary or array of dictionary. Trong insertUser: data dưới node "users" là dictionary [username:[String:Any]]. Trong insertPost: data dưới "post" là array of dictionary: [newEntry] (newEntry là 1 dictionary)
 */
