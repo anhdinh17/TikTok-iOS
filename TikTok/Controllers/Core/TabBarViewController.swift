@@ -76,6 +76,7 @@ class TabBarViewController: UITabBarController {
         cameraNav.navigationBar.backgroundColor = .clear
         cameraNav.navigationBar.setBackgroundImage(UIImage(), for: .default)
         cameraNav.navigationBar.shadowImage = UIImage()
+        cameraNav.navigationBar.tintColor = .white
         
         /*  we can use this way to set up tab bar items if we don't want navigationBar
          

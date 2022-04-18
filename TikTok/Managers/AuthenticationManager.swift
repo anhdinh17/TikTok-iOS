@@ -35,7 +35,7 @@ final class AuthManager {
     //MARK: Functions
     //=======================================================================================================
     
-    // Func to sign in using email, password, completion tra  ve 1 Result<>
+    // Func to sign in using email, password, completion tra ve 1 Result<>
     public func signIn(with email: String,
                        password: String,
                        completion: @escaping (Result<String,Error>)->Void){
@@ -50,6 +50,14 @@ final class AuthManager {
                 }
                 return
             }
+            
+            DatabaseManager.shared.getUsername(for: email) { username in
+                if let username = username {
+                    UserDefaults.standard.set(username, forKey: "username")
+                    print("Got username: \(username)")
+                }
+            }
+            
             // Neu sign in thanh cong (result != nil)
             // Tra ve 1 String(email) cho success case
             completion(.success(email))
@@ -69,6 +77,9 @@ final class AuthManager {
                 }
                 completion(true)
             }
+            
+            UserDefaults.standard.set(username, forKey: "username")
+            
             // After creating account, add that email and username into Firebase Database
             DatabaseManager.shared.insertUser(with: emailAddress, username: username, completion: completion)
     }

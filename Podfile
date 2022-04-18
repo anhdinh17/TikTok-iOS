@@ -12,5 +12,6 @@ target 'TikTok' do
   pod 'Firebase/Crashlytics'
   
   pod 'Appirater'
-  pod 'SDWebImage'	
+  pod 'SDWebImage'
+  pod 'ProgressHUD'	
 end

@@ -30,6 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            print("Error: \(Error.self)")
 //        }
         
+//        AuthManager.shared.signOut { _ in
+//            
+//        }
+        
         return true
     }
 
