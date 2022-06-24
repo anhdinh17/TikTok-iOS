@@ -118,7 +118,7 @@ final class DatabaseManager {
                 // Nếu chưa có node "posts", thì tạo node "post"
                 // node "post" sẽ là array of dictionary of newEntry that we create above
                 // fileName là id của từng thằng video
-                // Mình set value của posts là array of Dictionary --> [newEntry]
+                // Mình set value của posts là array of Dictionary --> [newEntry] --> Cai nay la structure minh muon cho thang "posts"
                 value["posts"] = [newEntry]
                 // setValue(value) to create data -- this is syntax
                 self?.database.child("users").child(username).setValue(value){ error, _ in
@@ -130,6 +130,11 @@ final class DatabaseManager {
                 }
             }
         }
+    }
+    
+    // Func to get notifications
+    public func getNotifications(completion: @escaping([Notification])->Void){
+        completion(Notification.mockData())
     }
     
     public func getAllUsers(completion: @escaping ([String]) -> Void){
