@@ -33,6 +33,7 @@ class TabBarViewController: UITabBarController {
             vc.completion = {[weak self] in
                 self?.signInPresented = false
             }
+            // set SignInVC to be root of navigation bar.
             let navVC = UINavigationController(rootViewController: vc)
             navVC.modalPresentationStyle = .fullScreen
             present(navVC,animated: false,completion: nil)
