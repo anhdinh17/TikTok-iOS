@@ -47,6 +47,12 @@ class NotificationsViewController: UIViewController,UITableViewDelegate, UITable
         self.tabBarController?.tabBar.isTranslucent = false
         tableView.delegate = self
         tableView.dataSource = self
+        
+        // pull tableView to refresh data
+        let control = UIRefreshControl()
+        control.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+        tableView.refreshControl = control
+        
         fetchNotifications()
     }
     
@@ -60,6 +66,20 @@ class NotificationsViewController: UIViewController,UITableViewDelegate, UITable
     }
 
 //MARK: - Functions
+    
+    // this func is for pull to refresh.
+    @objc func didPullToRefresh(_ sender: UIRefreshControl){
+        // pull down to fetch notifications into notification array and reload tableView
+        sender.beginRefreshing()
+        DatabaseManager.shared.getNotifications { [weak self] notifications in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self?.notifications = notifications
+                self?.tableView.reloadData()
+                sender.endRefreshing()
+            }
+        }
+    }
+    
     func fetchNotifications(){
         DatabaseManager.shared.getNotifications { [weak self] notifications in
             DispatchQueue.main.async {
@@ -143,6 +163,8 @@ extension NotificationsViewController {
                 if success {
                     // after we swipe a cell, filter the array to have the elements with "isHidden" variable is "false"
                     self?.notifications = (self?.notifications.filter({$0.isHidden == false}))!
+                    // call beginUpdates + do something + endUpdates when you need to insert/delete/select rows or section in tableView.
+                    // As I understand, in this case, we delete rows (swiping cells) and these 3 helps us to recalculate numberOfSections, numberOfRowsInSection, and reload tableView.
                     tableView.beginUpdates()
                     tableView.deleteRows(at: [indexPath], with: .none)
                     tableView.endUpdates()
