@@ -7,9 +7,18 @@
 
 import UIKit
 
+protocol NotificationsPostCommentTableViewCellDelegate: AnyObject {
+    func notificationsPostCommentTableViewCell(_ cell: NotificationsPostCommentTableViewCell,
+                                            didTapPostWith identifier: String)
+}
+
 class NotificationsPostCommentTableViewCell: UITableViewCell {
     static let identifier = "NotificationsPostCommentTableViewCell"
 
+    weak var delegate: NotificationsPostCommentTableViewCellDelegate?
+    
+    var postID: String?
+    
     private let postThumbnailImageView: UIImageView = {
         let image = UIImageView()
         image.layer.masksToBounds = true
@@ -30,7 +39,8 @@ class NotificationsPostCommentTableViewCell: UITableViewCell {
         label.textColor = .secondaryLabel
         return label
     }()
-    
+ 
+//MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.clipsToBounds = true
@@ -38,6 +48,9 @@ class NotificationsPostCommentTableViewCell: UITableViewCell {
         contentView.addSubview(label)
         contentView.addSubview(dateLabel)
         selectionStyle = .none
+        postThumbnailImageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapPost))
+        postThumbnailImageView.addGestureRecognizer(tap)
     }
     
     required init?(coder: NSCoder) {
@@ -73,10 +86,20 @@ class NotificationsPostCommentTableViewCell: UITableViewCell {
         label.text = nil
         dateLabel.text = nil
     }
+
+//MARK: - Funtions
+    @objc func didTapPost(){
+        guard let id = postID else {
+            return
+        }
+        delegate?.notificationsPostCommentTableViewCell(self,
+                                                     didTapPostWith: id)
+    }
     
     func configure(with postFileName: String, model: Notification){
         postThumbnailImageView.image = UIImage(named: "test")
         label.text = model.text
         dateLabel.text = .date(with: model.date)
+        postID = postFileName
     }
 }

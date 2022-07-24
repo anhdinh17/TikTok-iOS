@@ -144,6 +144,10 @@ final class DatabaseManager {
     public func getAllUsers(completion: @escaping ([String]) -> Void){
         
     }
+    
+    public func follow(username: String, completion: @escaping (Bool)->Void){
+        completion(true)
+    }
 }
 //=======================================================================================================
 //MARK: NOTES

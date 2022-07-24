@@ -79,6 +79,9 @@ class TabBarViewController: UITabBarController {
         cameraNav.navigationBar.shadowImage = UIImage()
         cameraNav.navigationBar.tintColor = .white
         
+        // change tint color of navigation bar of nav3
+        nav3.navigationBar.tintColor = .label
+        
         /*  we can use this way to set up tab bar items if we don't want navigationBar
          
         home.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "house"), tag: 1)
@@ -88,6 +91,14 @@ class TabBarViewController: UITabBarController {
         profile.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "person.circle"), tag: 5)
          
          */
+        
+        if #available(iOS 14.0, *) {
+            nav1.navigationBar.topItem?.backButtonDisplayMode = .minimal
+            nav2.navigationBar.topItem?.backButtonDisplayMode = .minimal
+            nav3.navigationBar.topItem?.backButtonDisplayMode = .minimal
+            nav4.navigationBar.topItem?.backButtonDisplayMode = .minimal
+            cameraNav.navigationBar.topItem?.backButtonDisplayMode = .minimal
+        }
         
         // Set the order of tab bar items
         setViewControllers([nav1,nav2,cameraNav,nav3,nav4], animated: false)
