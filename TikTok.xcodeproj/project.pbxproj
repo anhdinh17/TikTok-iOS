@@ -15,6 +15,7 @@
 		6762F1152866AFC300954F5B /* NotificationsPostCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6762F1142866AFC300954F5B /* NotificationsPostCommentTableViewCell.swift */; };
 		6772A20927F94D36000AF2C7 /* CaptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6772A20827F94D36000AF2C7 /* CaptionViewController.swift */; };
 		678983C127F5638A0073D0E8 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678983C027F5638A0073D0E8 /* RecordButton.swift */; };
+		679521FF28A9666300BBB47F /* ProfileHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679521FE28A9666300BBB47F /* ProfileHeaderCollectionReusableView.swift */; };
 		679A0D02274EE73D00BF1449 /* PostComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679A0D01274EE73D00BF1449 /* PostComment.swift */; };
 		679A0D04274EE78000BF1449 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679A0D03274EE78000BF1449 /* User.swift */; };
 		679A0D0627508F1900BF1449 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679A0D0527508F1900BF1449 /* CommentTableViewCell.swift */; };
@@ -70,6 +71,7 @@
 		6762F1142866AFC300954F5B /* NotificationsPostCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPostCommentTableViewCell.swift; sourceTree = "<group>"; };
 		6772A20827F94D36000AF2C7 /* CaptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionViewController.swift; sourceTree = "<group>"; };
 		678983C027F5638A0073D0E8 /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
+		679521FE28A9666300BBB47F /* ProfileHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		679A0D01274EE73D00BF1449 /* PostComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostComment.swift; sourceTree = "<group>"; };
 		679A0D03274EE78000BF1449 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		679A0D0527508F1900BF1449 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -292,10 +294,11 @@
 		67BC67F427338D1F004BFEBA /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				679521FE28A9666300BBB47F /* ProfileHeaderCollectionReusableView.swift */,
 				679A0D0527508F1900BF1449 /* CommentTableViewCell.swift */,
+				678983C027F5638A0073D0E8 /* RecordButton.swift */,
 				6762F1112866AF0D00954F5B /* Explore Cell */,
 				6762F1102866AEFE00954F5B /* Auth */,
-				678983C027F5638A0073D0E8 /* RecordButton.swift */,
 				6762F1162866AFE600954F5B /* Notifications Cell */,
 			);
 			path = Other;
@@ -498,6 +501,7 @@
 				679A0D02274EE73D00BF1449 /* PostComment.swift in Sources */,
 				67E1D89F2761BC6B000451D1 /* ExploreUserCollectionViewCell.swift in Sources */,
 				67E1D84D275C6659000451D1 /* ExploreUserViewModel.swift in Sources */,
+				679521FF28A9666300BBB47F /* ProfileHeaderCollectionReusableView.swift in Sources */,
 				67BC67E627338988004BFEBA /* NotificationsViewController.swift in Sources */,
 				67BC67EC273389E3004BFEBA /* SignInViewController.swift in Sources */,
 				67BC67E82733899D004BFEBA /* ProfileViewController.swift in Sources */,

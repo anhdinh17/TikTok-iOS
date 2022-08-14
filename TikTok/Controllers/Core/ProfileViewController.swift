@@ -18,6 +18,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         collectionView.backgroundColor = .systemBackground
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        // Register for collectionView Header
+        collectionView.register(ProfileHeaderCollectionReusableView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: ProfileHeaderCollectionReusableView.identifier)
         return collectionView
     }()
     
@@ -39,6 +43,16 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         view.addSubview(collectionView)
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        let username = UserDefaults.standard.string(forKey: "username")?.uppercased() ?? "Me"
+        // we show gear button if current profile is of ourself.
+        if title == username {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"),
+                                                                style: .done,
+                                                                target: self,
+                                                                action: #selector(didTapSettings))
+        }
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -46,6 +60,12 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         collectionView.frame = view.bounds
     }
 
+    //MARK: - Actions
+    @objc func didTapSettings(){
+        let vc = SettingsViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     //MARK: - CollectionView
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -77,5 +97,22 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    // CollectionView Header
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader,
+              let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: ProfileHeaderCollectionReusableView.identifier,
+                for: indexPath) as? ProfileHeaderCollectionReusableView else {
+            return UICollectionReusableView()
+        }
+        header.backgroundColor = .green
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.width, height: 300)
     }
 }
