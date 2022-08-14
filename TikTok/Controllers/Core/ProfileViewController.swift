@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,ProfileHeaderCollectionReusableViewDelegate {
 //MARK: - Properties
     let user: User
     
@@ -100,6 +100,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     // CollectionView Header
+    // this func is to dequeue header
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard kind == UICollectionView.elementKindSectionHeader,
               let header = collectionView.dequeueReusableSupplementaryView(
@@ -108,11 +109,34 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 for: indexPath) as? ProfileHeaderCollectionReusableView else {
             return UICollectionReusableView()
         }
-        header.backgroundColor = .green
+        header.delegate = self
+        let viewModel = ProfileHeaderViewModel(avatarImageURL: nil, followerCount: 120, followingCount: 200, isFollowing: false)
+        header.configure(with: viewModel)
         return header
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.width, height: 300)
+    }
+}
+
+//MARK: - Profile Header Delegate
+extension ProfileViewController {
+    func profileHeaderCollectionReusableView(_ header: ProfileHeaderCollectionReusableView, didTapPrimaryButtonWith viewModel: ProfileHeaderViewModel) {
+        guard let currentUsername = UserDefaults.standard.string(forKey: "username") else {return}
+        
+        if self.user.userName == currentUsername {
+            // Edit profile
+        } else {
+            // Follow or unfollow current users profile that we are viewing
+        }
+    }
+    
+    func profileHeaderCollectionReusableView(_ header: ProfileHeaderCollectionReusableView, didTapFollowersButtonWith viewModel: ProfileHeaderViewModel) {
+        
+    }
+    
+    func profileHeaderCollectionReusableView(_ header: ProfileHeaderCollectionReusableView, didTapFollowingButtonWith viewModel: ProfileHeaderViewModel) {
+        
     }
 }
