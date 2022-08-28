@@ -7,9 +7,21 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,ProfileHeaderCollectionReusableViewDelegate {
+class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,ProfileHeaderCollectionReusableViewDelegate{
 //MARK: - Properties
+    enum PicturePickerType {
+        case camera
+        case photoLibrary
+    }
+    
     let user: User
+    
+    var isCurrentUserProfile: Bool {
+        if let username = UserDefaults.standard.string(forKey: "username") {
+            return user.userName.lowercased() == username.lowercased()
+        }
+        return false
+    }
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -110,8 +122,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             return UICollectionReusableView()
         }
         header.delegate = self
-        let viewModel = ProfileHeaderViewModel(avatarImageURL: nil, followerCount: 120, followingCount: 200, isFollowing: false)
+        
+        // if isFollowing is nil -> current logged in user
+        // if isFollowing is Bool -> someone's profile
+        let viewModel = ProfileHeaderViewModel(avatarImageURL: nil,
+                                               followerCount: 120,
+                                               followingCount: 200,
+                                               isFollowing: isCurrentUserProfile ? nil : false)
         header.configure(with: viewModel)
+        
         return header
     }
     
@@ -138,5 +157,50 @@ extension ProfileViewController {
     
     func profileHeaderCollectionReusableView(_ header: ProfileHeaderCollectionReusableView, didTapFollowingButtonWith viewModel: ProfileHeaderViewModel) {
         
+    }
+    
+    func profileHeaderCollectionReusableView(_ header: ProfileHeaderCollectionReusableView, didTapAvatarFor viewModel: ProfileHeaderViewModel) {
+        guard isCurrentUserProfile else {
+            return
+        }
+        let actionSheet = UIAlertController(title: "Profile Picture", message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: {_ in
+            DispatchQueue.main.async {
+                self.presentProfilePicturePicker(type: .camera)
+            }
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: {_ in
+            DispatchQueue.main.async {
+                self.presentProfilePicturePicker(type: .photoLibrary)
+            }
+        }))
+        present(actionSheet,animated: true)
+    }
+    
+    // This func is not from delegate
+    func presentProfilePicturePicker(type: PicturePickerType) {
+        let picker = UIImagePickerController()
+        picker.sourceType = type == .camera ? .camera : .photoLibrary
+        picker.delegate = self
+        picker.allowsEditing = true
+        present(picker, animated: true)
+    }
+    
+}
+
+//=======================================================================================================
+//MARK: UIImagePicker
+//=======================================================================================================
+extension ProfileViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true,completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {return}
+        
+        // upload and update UI
     }
 }

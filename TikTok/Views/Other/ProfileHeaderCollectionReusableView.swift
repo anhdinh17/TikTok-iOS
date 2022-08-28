@@ -15,10 +15,9 @@ protocol ProfileHeaderCollectionReusableViewDelegate: AnyObject {
                                              didTapFollowersButtonWith viewModel: ProfileHeaderViewModel)
     func profileHeaderCollectionReusableView(_ header: ProfileHeaderCollectionReusableView,
                                              didTapFollowingButtonWith viewModel: ProfileHeaderViewModel)
+    func profileHeaderCollectionReusableView(_ header: ProfileHeaderCollectionReusableView,
+                                             didTapAvatarFor viewModel: ProfileHeaderViewModel)
 }
-
-
-
 
 class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     static let identifier = "ProfileHeaderCollectionReusableView"
@@ -76,6 +75,10 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         backgroundColor = .systemBackground
         addSubviews()
         configureButtons()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
+        avatarImageView.isUserInteractionEnabled = true
+        avatarImageView.addGestureRecognizer(tap)
     }
     
     required init?(coder: NSCoder) {
@@ -134,6 +137,11 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         delegate?.profileHeaderCollectionReusableView(self, didTapFollowingButtonWith: viewModel)
     }
     
+    @objc func didTapAvatar(){
+        guard let viewModel = self.viewModel else {return}
+        delegate?.profileHeaderCollectionReusableView(self, didTapAvatarFor: viewModel)
+    }
+    
     func configure(with viewModel: ProfileHeaderViewModel){
         self.viewModel = viewModel
         // Setup our header
@@ -146,9 +154,13 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         }
         
         if let isFollowing = viewModel.isFollowing {
+            // if there's isFollowing from viewModel, that means we are looking at somebody's else profile
+            // then primary button is "Unfollow" or "Follow"
             primaryButton.backgroundColor = isFollowing ? .secondarySystemBackground : .systemPink
             primaryButton.setTitle(isFollowing ? "Unfollow" : "Follow", for: .normal)
         } else {
+            // this else means there's no isFollowing from viewModel,
+            // that means this header is ourself, so primary button is "Edit Profile"
             primaryButton.backgroundColor = .secondarySystemBackground
             primaryButton.setTitle("Edit Profile", for: .normal)
         }
