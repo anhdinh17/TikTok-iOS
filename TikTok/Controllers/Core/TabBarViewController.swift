@@ -42,13 +42,24 @@ class TabBarViewController: UITabBarController {
     
     // This func is to set up tab bar
     private func setUpControllers(){
+        
+        // this is used to get url string of profile image
+        // After we set the image for profile, if we close the app and rerun, we don't see new profile image
+        // that's why we need to set this below so that every time we open the app,
+        // we have the latest profile image
+        var urlString: String?
+        if let cachedUrlString = UserDefaults.standard.string(forKey: "profile_picture_url"){
+            urlString = cachedUrlString
+        }
+        
         let home = HomeViewController()
         let explore = ExploreViewController()
         let camera = CameraViewController()
         let notifications = NotificationsViewController()
-        let profile = ProfileViewController(user: User(userName: UserDefaults.standard.string(forKey: "username")?.uppercased() ?? "Me",
-                                                       profilePictureUrl: nil,
-                                                       identifier: UserDefaults.standard.string(forKey: "username")?.lowercased() ?? ""))
+        let profile = ProfileViewController(user:
+                                                User(userName: UserDefaults.standard.string(forKey: "username")?.uppercased() ?? "Me",
+                                                     profilePictureUrl: URL(string: urlString ?? ""),
+                                                     identifier: UserDefaults.standard.string(forKey: "username")?.lowercased() ?? ""))
         
         home.title = "Home"
         notifications.title = "Notifications"

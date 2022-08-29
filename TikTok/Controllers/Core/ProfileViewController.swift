@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,ProfileHeaderCollectionReusableViewDelegate{
 //MARK: - Properties
@@ -14,7 +15,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         case photoLibrary
     }
     
-    let user: User
+    var user: User
     
     var isCurrentUserProfile: Bool {
         if let username = UserDefaults.standard.string(forKey: "username") {
@@ -125,7 +126,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         // if isFollowing is nil -> current logged in user
         // if isFollowing is Bool -> someone's profile
-        let viewModel = ProfileHeaderViewModel(avatarImageURL: nil,
+        let viewModel = ProfileHeaderViewModel(avatarImageURL: user.profilePictureUrl,
                                                followerCount: 120,
                                                followingCount: 200,
                                                isFollowing: isCurrentUserProfile ? nil : false)
@@ -199,8 +200,36 @@ extension ProfileViewController: UIImagePickerControllerDelegate & UINavigationC
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
+        
+        // This is the image we choose from photo library
         guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {return}
         
+        // show uploading spinning thing
+        ProgressHUD.show("Uploading")
+        
         // upload and update UI
+        StorageManager.shared.uploadProfileImage(with: image) { [weak self] result in
+            DispatchQueue.main.async {
+                guard let strongSelf = self else {return}
+                switch result {
+                // When successfully receive image url
+                case .success(let downloadUrl):
+                    // set value for the url string to use it later.
+                    // this will be used when we close the app and reopen it, we need an url string to set up User object for ProfileViewController in TabBarVC.
+                    UserDefaults.standard.setValue(downloadUrl.absoluteString, forKey: "profile_picture_url")
+                    
+                    // reinit the user with download image url
+                    strongSelf.user = User(userName: strongSelf.user.userName,
+                                     profilePictureUrl: downloadUrl,
+                                     identifier: strongSelf.user.userName)
+                    // reload collectionView so that it can use the new image url and set the header image for avatar
+                    strongSelf.collectionView.reloadData()
+                    
+                    ProgressHUD.showSucceed("Updated")
+                case .failure:
+                    ProgressHUD.showError("Failed to upload profile picture")
+                }
+            }
+        }
     }
 }

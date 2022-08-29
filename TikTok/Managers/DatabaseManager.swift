@@ -148,6 +148,9 @@ final class DatabaseManager {
     public func follow(username: String, completion: @escaping (Bool)->Void){
         completion(true)
     }
+    
+    
+    
 }
 //=======================================================================================================
 //MARK: NOTES
