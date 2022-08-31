@@ -109,7 +109,10 @@ final class ExploreManager {
                     DispatchQueue.main.async {
                         // use id to fetch post from Firebase
                         let postID = model.id
-                        let vc = PostViewController(model: PostModel(identifier: postID))
+                        let vc = PostViewController(model: PostModel(identifier: postID,
+                                                                     user: User(userName:"Kanye West",
+                                                                                profilePictureUrl: nil,
+                                                                                identifier: UUID().uuidString)))
                         self?.delegate?.pushViewController(vc)
                     }
                 }
@@ -129,7 +132,10 @@ final class ExploreManager {
                     DispatchQueue.main.async {
                         // use id to fetch post from Firebase
                         let postID = model.id
-                        let vc = PostViewController(model: PostModel(identifier: postID))
+                        let vc = PostViewController(model: PostModel(identifier: postID,
+                                                                     user: User(userName:"Kanye West",
+                                                                                profilePictureUrl: nil,
+                                                                                identifier: UUID().uuidString)))
                         self?.delegate?.pushViewController(vc)
                     }
                 }
@@ -149,7 +155,10 @@ final class ExploreManager {
                     DispatchQueue.main.async {
                         // use id to fetch post from Firebase
                         let postID = model.id
-                        let vc = PostViewController(model: PostModel(identifier: postID))
+                        let vc = PostViewController(model: PostModel(identifier: postID,
+                                                                     user: User(userName:"Kanye West",
+                                                                                profilePictureUrl: nil,
+                                                                                identifier: UUID().uuidString)))
                         self?.delegate?.pushViewController(vc)
                     }
                 }

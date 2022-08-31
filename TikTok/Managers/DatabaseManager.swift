@@ -92,8 +92,10 @@ final class DatabaseManager {
                 completion(false)
                 return
             }
+            
             /*
-            value/snapshot.value is the dictionary tree under username in Realtime Database
+            -----value/snapshot.value is the dictionary tree under username in Realtime Database
+            -----voi insertPost() nay, khi chua co node "posts", minh tao o khuc duoi nay chu kho tao trong khu guard-else, vi minh nghi luc nay la tao them node moi o duoi node da co roi.
              */
             
             // create the structure of the "post"
@@ -129,6 +131,30 @@ final class DatabaseManager {
                     completion(true)
                 }
             }
+        }
+    }
+    
+    public func getPosts(for user: User, completion: @escaping([PostModel])->Void){
+        3
+        
+        let path = "users/\(user.userName)/posts"
+        
+        database.child(path).observeSingleEvent(of: .value) { [weak self] snapshot in
+            guard let posts = snapshot.value as? [[String: String]] else {
+                completion([])
+                return
+            }
+            
+            // syntax moi
+            let model: [PostModel] = posts.compactMap({
+                var model = PostModel(identifier: UUID().uuidString,
+                                      user: user)
+                model.fileName = $0["name"] ?? ""
+                model.caption = $0["caption"] ?? ""
+                return model
+            })
+            
+            completion(model)
         }
     }
     
