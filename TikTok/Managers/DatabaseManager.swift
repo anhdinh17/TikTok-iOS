@@ -135,9 +135,8 @@ final class DatabaseManager {
     }
     
     public func getPosts(for user: User, completion: @escaping([PostModel])->Void){
-        3
         
-        let path = "users/\(user.userName)/posts"
+        let path = "users/\(user.userName.lowercased())/posts"
         
         database.child(path).observeSingleEvent(of: .value) { [weak self] snapshot in
             guard let posts = snapshot.value as? [[String: String]] else {
@@ -147,6 +146,7 @@ final class DatabaseManager {
             
             // syntax moi
             let model: [PostModel] = posts.compactMap({
+                // voi moi element, tao 1 instance cua PostModel
                 var model = PostModel(identifier: UUID().uuidString,
                                       user: user)
                 model.fileName = $0["name"] ?? ""

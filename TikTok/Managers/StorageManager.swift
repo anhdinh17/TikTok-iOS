@@ -71,4 +71,16 @@ final class StorageManager {
         
     }
     
+    // get the url of the video post from Firebase Storage
+    func getDownloadURL(for post: PostModel, completion: @escaping (Result<URL,Error>) -> Void){
+        storageBucket.child(post.videoChildPath).downloadURL { url, error in
+            if let error = error {
+                print("Error in getDownloadURL: \(error)")
+                completion(.failure(error))
+            } else if let url = url {
+                completion(.success(url))
+            }
+        }
+    }
+    
 }

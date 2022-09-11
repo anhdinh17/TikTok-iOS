@@ -14,6 +14,11 @@ struct PostModel {
     var fileName: String = ""
     var caption: String = ""
     
+    // the path of a video post
+    var videoChildPath: String {
+        return "videos/\(user.userName.lowercased())/\(fileName)"
+    }
+    
     // debug/mocking func
     static func mockModels() -> [PostModel] {
         var posts = [PostModel]()

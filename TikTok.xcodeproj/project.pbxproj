@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		670D4AC228CE37F600B46F94 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670D4AC128CE37F600B46F94 /* PostCollectionViewCell.swift */; };
 		6752D1A227B2327F0095155E /* AuthField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6752D1A127B2327F0095155E /* AuthField.swift */; };
 		6752D1A427B232960095155E /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6752D1A327B232960095155E /* AuthButton.swift */; };
 		6762F0CB2865509500954F5B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6762F0CA2865509500954F5B /* Notifications.swift */; };
@@ -64,6 +65,7 @@
 /* Begin PBXFileReference section */
 		30D0B75FAF57F5104B33F0C4 /* Pods-TikTok.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TikTok.debug.xcconfig"; path = "Target Support Files/Pods-TikTok/Pods-TikTok.debug.xcconfig"; sourceTree = "<group>"; };
 		310E03EC9CDDB541673B44E0 /* Pods_TikTok.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TikTok.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		670D4AC128CE37F600B46F94 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
 		6752D1A127B2327F0095155E /* AuthField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthField.swift; sourceTree = "<group>"; };
 		6752D1A327B232960095155E /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		6762F0CA2865509500954F5B /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				679521FE28A9666300BBB47F /* ProfileHeaderCollectionReusableView.swift */,
 				679A0D0527508F1900BF1449 /* CommentTableViewCell.swift */,
 				678983C027F5638A0073D0E8 /* RecordButton.swift */,
+				670D4AC128CE37F600B46F94 /* PostCollectionViewCell.swift */,
 				6762F1112866AF0D00954F5B /* Explore Cell */,
 				6762F1102866AEFE00954F5B /* Auth */,
 				6762F1162866AFE600954F5B /* Notifications Cell */,
@@ -482,6 +485,7 @@
 				6752D1A427B232960095155E /* AuthButton.swift in Sources */,
 				67BC67E227338950004BFEBA /* ExploreViewController.swift in Sources */,
 				67BC67EA273389CA004BFEBA /* UserListViewController.swift in Sources */,
+				670D4AC228CE37F600B46F94 /* PostCollectionViewCell.swift in Sources */,
 				67BC67F027338A0E004BFEBA /* SettingsViewController.swift in Sources */,
 				67BC67F827338D84004BFEBA /* APICaller.swift in Sources */,
 				67BC67F627338D57004BFEBA /* PostViewController.swift in Sources */,

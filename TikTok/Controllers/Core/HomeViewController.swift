@@ -53,7 +53,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .link
+        view.backgroundColor = .systemBackground
         
         view.addSubview(horizontalScrollView)
         // set the start of ScrollView when we first launch the app. In this case, when we start the app, scrollView is on the right of the content, and we can scroll left.

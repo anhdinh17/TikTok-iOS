@@ -30,7 +30,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .systemBackground
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(PostCollectionViewCell.self,
+                                forCellWithReuseIdentifier: PostCollectionViewCell.identifier)
         // Register for collectionView Header
         collectionView.register(ProfileHeaderCollectionReusableView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -103,8 +104,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let post = posts[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .blue
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PostCollectionViewCell.identifier,
+                                                      for: indexPath) as? PostCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.configure(with: post)
         return cell
     }
     
@@ -115,6 +119,12 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        // Open a post
+        let post = posts[indexPath.row]
+        let vc = PostViewController(model: post)
+        vc.title = "Video"
+        vc.delegate = self
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -245,4 +255,16 @@ extension ProfileViewController: UIImagePickerControllerDelegate & UINavigationC
             }
         }
     }
+}
+
+extension ProfileViewController: PostViewControllerDelegate {
+    func postViewControllerDelegate(_ vc: PostViewController, didTapCommentButtonFor post: PostModel) {
+        // Present comments
+    }
+    
+    func postViewControllerDelegate(_ vc: PostViewController, didTapProfileButtonFor post: PostModel) {
+        // Push another profile
+    }
+    
+    
 }

@@ -92,6 +92,8 @@ class TabBarViewController: UITabBarController {
         
         // change tint color of navigation bar of nav3
         nav3.navigationBar.tintColor = .label
+        // change tint color of navigation bar of nav4
+        nav4.navigationBar.tintColor = .label
         
         /*  we can use this way to set up tab bar items if we don't want navigationBar
          
