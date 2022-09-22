@@ -166,16 +166,25 @@ final class DatabaseManager {
     public func markNotificationAsHidden(notificationID: String, completion: @escaping (Bool)->Void){
         completion(true)
     }
-    
-    public func getAllUsers(completion: @escaping ([String]) -> Void){
-        
-    }
-    
+
     public func follow(username: String, completion: @escaping (Bool)->Void){
         completion(true)
     }
     
-    
+    public func getRelationships(for user: User,
+                                 type: UserListViewController.ListType,
+                                 completion: @escaping ([String]) -> Void){
+        let path = "users/\(user.userName.lowercased())/\(type.rawValue)"
+        print("Fetching Path: \(path)")
+        database.child(path).observeSingleEvent(of: .value) { [weak self] snapshot in
+            guard let usernameCollection = snapshot.value as? [String] else {
+                completion([])
+                return
+            }
+            
+            completion(usernameCollection)
+        }
+    }
     
 }
 //=======================================================================================================
