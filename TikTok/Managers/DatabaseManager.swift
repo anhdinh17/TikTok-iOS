@@ -171,11 +171,11 @@ final class DatabaseManager {
         completion(true)
     }
     
+    // This func downloads array of followers and array of following.
     public func getRelationships(for user: User,
                                  type: UserListViewController.ListType,
                                  completion: @escaping ([String]) -> Void){
         let path = "users/\(user.userName.lowercased())/\(type.rawValue)"
-        print("Fetching Path: \(path)")
         database.child(path).observeSingleEvent(of: .value) { [weak self] snapshot in
             guard let usernameCollection = snapshot.value as? [String] else {
                 completion([])
@@ -183,6 +183,22 @@ final class DatabaseManager {
             }
             
             completion(usernameCollection)
+        }
+    }
+    
+    // this func checks if followers/following array contains current loged-in user.
+    public func isValidRelationship(for user: User,
+                                    type: UserListViewController.ListType,
+                                    completion: @escaping (Bool) -> Void){
+        guard let currentUserUsername = UserDefaults.standard.string(forKey: "username")?.lowercased() else {return}
+        let path = "users/\(user.userName.lowercased())/\(type.rawValue)"
+        database.child(path).observeSingleEvent(of: .value) { [weak self] snapshot in
+            guard let usernameCollection = snapshot.value as? [String] else {
+                completion(false)
+                return
+            }
+            // Tra ve true neu UserDefaults.standard.string(forKey: "username") nam trong array snapshot.value
+            completion(usernameCollection.contains(currentUserUsername))
         }
     }
     

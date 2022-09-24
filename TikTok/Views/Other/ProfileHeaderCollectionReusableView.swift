@@ -155,7 +155,8 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         
         if let isFollowing = viewModel.isFollowing {
             // if there's isFollowing from viewModel, that means we are looking at somebody's else profile
-            // then primary button is "Unfollow" or "Follow"
+            // isFollwing is True means we are following this guy/her
+            // then primary button is "Unfollow" and vice versa
             primaryButton.backgroundColor = isFollowing ? .secondarySystemBackground : .systemPink
             primaryButton.setTitle(isFollowing ? "Unfollow" : "Follow", for: .normal)
         } else {

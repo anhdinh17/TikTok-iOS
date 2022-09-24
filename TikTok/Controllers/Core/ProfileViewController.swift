@@ -42,6 +42,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     private var posts = [PostModel]()
     private var followers = [String]()
     private var following = [String]()
+    private var isFollower: Bool = false
     
     //MARK: - Initialization
     init(user: User){
@@ -152,6 +153,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         let group = DispatchGroup()
         group.enter()
         group.enter()
+        group.enter()
         
         DatabaseManager.shared.getRelationships(for: user,
                                                 type: .followers) { [weak self] followers in
@@ -167,13 +169,27 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
             self?.following = following
         }
+        
+        // The profile that we are looking at.
+        // if our name is in their "followers" array in Firebase,
+        // isFollower is True, else isFollower is false
+        // isFollower o day la minh follow profile nay
+        DatabaseManager.shared.isValidRelationship(for: user,
+                                                   type: .followers) { [weak self] isFollower in
+            defer{
+                group.leave()
+            }
+            self?.isFollower = isFollower
+        }
+        
         group.notify(queue: .main) { [weak self] in
             // if isFollowing is nil -> current logged in user
             // if isFollowing is Bool -> someone's profile
+            // isFollowing means I am following this guy/her.
             let viewModel = ProfileHeaderViewModel(avatarImageURL: self?.user.profilePictureUrl,
                                                    followerCount: self?.followers.count ?? 0,
                                                    followingCount: self?.following.count ?? 0,
-                                                   isFollowing: (self?.isCurrentUserProfile ?? false) ? nil : false)
+                                                   isFollowing: (self?.isCurrentUserProfile ?? false) ? nil : self?.isFollower)
             
             // khi run func nay, property "viewModel" cua ProfileHeaderCollectionReusableView
             // se duoc set bang viewModel minh moi tao o tren.
