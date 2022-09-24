@@ -214,6 +214,29 @@ extension ProfileViewController {
             // Edit profile
         } else {
             // Follow or unfollow current users profile that we are viewing
+            if self.isFollower {
+                // Unfollow, because ifFollower is True which means we're already their followers.
+                DatabaseManager.shared.updateRelationship(for: user,
+                                                          follow: false) { [weak self] success in
+                    if success {
+                        DispatchQueue.main.async {
+                            self?.isFollower = false
+                            self?.collectionView.reloadData()
+                        }
+                    }
+                }
+            } else {
+                // Follow
+                DatabaseManager.shared.updateRelationship(for: user,
+                                                          follow: true) { [weak self] success in
+                    if success {
+                        DispatchQueue.main.async {
+                            self?.isFollower = true
+                            self?.collectionView.reloadData()
+                        }
+                    }
+                }
+            }
         }
     }
     

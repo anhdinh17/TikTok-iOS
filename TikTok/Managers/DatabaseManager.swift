@@ -202,6 +202,57 @@ final class DatabaseManager {
         }
     }
     
+    // follow is false means we want to unfollow, follow is True means we want to follow
+    public func updateRelationship(for user: User,
+                                   follow: Bool,
+                                   completion: @escaping (Bool) -> Void){
+        guard let currentUserUsername = UserDefaults.standard.string(forKey: "username")?.lowercased() else {return}
+        
+        // if we want to follow target user
+        if follow {
+            // Insert into current user following
+            let path = "users/\(currentUserUsername.lowercased())/following"
+            database.child(path).observeSingleEvent(of: .value) { snapshot in
+                let usernameToInsert = user.userName.lowercased()
+                // if there's already an array under "following" node
+                if var current = snapshot.value as? [String] {
+                    current.append(usernameToInsert)
+                    self.database.child(path).setValue(current) { error, _ in
+                        completion(error == nil)
+                    }
+                } else {
+                    // if there's no array yet.
+                    // This is syntax to create an new array
+                    self.database.child(path).setValue([usernameToInsert]) { error, _ in
+                        completion(error == nil)
+                    }
+                }
+            }
+            
+            // Insert into target user follower
+            let path2 = "users/\(user.userName.lowercased())/followers"
+            database.child(path2).observeSingleEvent(of: .value) { snapshot in
+                let usernameToInsert = currentUserUsername.lowercased()
+                // if there's already an array under "following" node
+                if var current = snapshot.value as? [String] {
+                    current.append(usernameToInsert)
+                    self.database.child(path2).setValue(current) { error, _ in
+                        completion(error == nil)
+                    }
+                } else {
+                    // if there's no array yet.
+                    // This is syntax to create an new array
+                    self.database.child(path2).setValue([usernameToInsert]) { error, _ in
+                        completion(error == nil)
+                    }
+                }
+            }
+        }
+        else {
+            
+        }
+    }
+    
 }
 //=======================================================================================================
 //MARK: NOTES
