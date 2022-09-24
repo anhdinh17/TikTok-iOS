@@ -51,6 +51,7 @@
 		67BC684A274CA706004BFEBA /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BC6849274CA706004BFEBA /* CommentsViewController.swift */; };
 		67D0D423277AC2D2002D09AB /* explore.json in Resources */ = {isa = PBXBuildFile; fileRef = 67D0D422277AC2D2002D09AB /* explore.json */; };
 		67D0D427277ACF39002D09AB /* ExploreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D0D426277ACF39002D09AB /* ExploreManager.swift */; };
+		67DA422128DFAB400076768E /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DA422028DFAB400076768E /* EditProfileViewController.swift */; };
 		67E1D847275C6580000451D1 /* ExploreBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E1D846275C6580000451D1 /* ExploreBannerViewModel.swift */; };
 		67E1D849275C6604000451D1 /* ExplorePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E1D848275C6604000451D1 /* ExplorePostViewModel.swift */; };
 		67E1D84B275C6630000451D1 /* ExploreHashtagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E1D84A275C6630000451D1 /* ExploreHashtagViewModel.swift */; };
@@ -111,6 +112,7 @@
 		67BC6849274CA706004BFEBA /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		67D0D422277AC2D2002D09AB /* explore.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = explore.json; sourceTree = "<group>"; };
 		67D0D426277ACF39002D09AB /* ExploreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreManager.swift; sourceTree = "<group>"; };
+		67DA422028DFAB400076768E /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		67E1D846275C6580000451D1 /* ExploreBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreBannerViewModel.swift; sourceTree = "<group>"; };
 		67E1D848275C6604000451D1 /* ExplorePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePostViewModel.swift; sourceTree = "<group>"; };
 		67E1D84A275C6630000451D1 /* ExploreHashtagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreHashtagViewModel.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				67BC67F527338D57004BFEBA /* PostViewController.swift */,
 				67BC6849274CA706004BFEBA /* CommentsViewController.swift */,
 				6772A20827F94D36000AF2C7 /* CaptionViewController.swift */,
+				67DA422028DFAB400076768E /* EditProfileViewController.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 				67D0D427277ACF39002D09AB /* ExploreManager.swift in Sources */,
 				679A0D02274EE73D00BF1449 /* PostComment.swift in Sources */,
 				67E1D89F2761BC6B000451D1 /* ExploreUserCollectionViewCell.swift in Sources */,
+				67DA422128DFAB400076768E /* EditProfileViewController.swift in Sources */,
 				67E1D84D275C6659000451D1 /* ExploreUserViewModel.swift in Sources */,
 				679521FF28A9666300BBB47F /* ProfileHeaderCollectionReusableView.swift in Sources */,
 				67BC67E627338988004BFEBA /* NotificationsViewController.swift in Sources */,

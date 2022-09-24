@@ -248,8 +248,31 @@ final class DatabaseManager {
                 }
             }
         }
+        // if we want to unfollow a target user
         else {
+            // Remove from current user following
+            let path = "users/\(currentUserUsername.lowercased())/following"
+            database.child(path).observeSingleEvent(of: .value) { snapshot in
+                let usernameToRemove = user.userName.lowercased()
+                if var current = snapshot.value as? [String] {
+                    current.removeAll(where: {$0 == usernameToRemove})
+                    self.database.child(path).setValue(current) { error, _ in
+                        completion(error == nil)
+                    }
+                }
+            }
             
+            // Remove from target user follower
+            let path2 = "users/\(user.userName.lowercased())/followers"
+            database.child(path2).observeSingleEvent(of: .value) { snapshot in
+                let usernameToRemove = currentUserUsername.lowercased()
+                if var current = snapshot.value as? [String] {
+                    current.removeAll(where: {$0 == usernameToRemove})
+                    self.database.child(path2).setValue(current) { error, _ in
+                        completion(error == nil)
+                    }
+                }
+            }
         }
     }
     
