@@ -6,6 +6,17 @@
 //
 
 import UIKit
+import SafariServices
+
+struct SettingsSection {
+    let title: String
+    let options: [SettingsOption]
+}
+
+struct SettingsOption {
+    let title: String
+    let handler: (()->Void)
+}
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -14,11 +25,41 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return table
     }()
+    
+    var sections = [SettingsSection]()
    
 //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        
+        sections = [
+            SettingsSection(title: "Information",
+                            options: [
+                                SettingsOption(title: "Terms of Service",
+                                               handler: { [weak self] in
+                                                   DispatchQueue.main.async {
+                                                       guard let url = URL(string: "https://www.tiktok.com/legal/terms-of-service") else {
+                                                           return
+                                                       }
+                                                       let vc = SFSafariViewController(url: url)
+                                                       self?.present(vc, animated: true)
+                                                   }
+                                               }),
+                                SettingsOption(title: "Policy",
+                                               handler: { [weak self] in
+                                                   DispatchQueue.main.async {
+                                                       guard let url = URL(string: "https://www.tiktok.com/legal/privacy-policy") else {
+                                                           return
+                                                       }
+                                                       let vc = SFSafariViewController(url: url)
+                                                       self?.present(vc, animated: true)
+                                                       
+                                                   }
+                                               })
+                            ])
+        ]
+        
         title = "Settings"
         view.addSubview(tableView)
         tableView.delegate = self
@@ -80,16 +121,34 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
 //MARK: - TableView
 extension SettingsViewController {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return sections[section].options.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // get the model for each row
+        // because we have sections for this tableView, we have to get into each section
+        // then get into cells in that section
+        // options[indexPath.row] = 1 SettingsOption instance
+        let model = sections[indexPath.section].options[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "YO!"
+        cell.accessoryType = .disclosureIndicator
+        cell.textLabel?.text = model.title
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let model = sections[indexPath.section].options[indexPath.row]
+        // call this handler to trigger the completion in each model
+        model.handler()
+    }
+    
+    // title for section
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section].title
     }
 }
