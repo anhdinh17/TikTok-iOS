@@ -104,10 +104,11 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         AuthManager.shared.signIn(with: email, password: password) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
-                case.success(let email):
+                case.success:
+                    HapticsManager.shared.vibrate(for: .success)
                     self?.dismiss(animated: true, completion: nil)
                 case .failure(let error):
-                    print(error)
+                    HapticsManager.shared.vibrate(for: .error)
                     let alert = UIAlertController(title: "Sign In Failed", message: "Please enter valid email and password to sign in", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
                     self?.present(alert,animated: true)

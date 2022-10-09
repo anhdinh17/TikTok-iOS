@@ -254,6 +254,8 @@ extension HomeViewController: PostViewControllerDelegate{
             forYouPageViewController.dataSource = nil
         }
         
+        HapticsManager.shared.vibrateForSelection()
+        
         // create a CommentsVC and add it to HomeVC
         let vc = CommentsViewController(post: post)
         vc.delegate = self // to use Protocol form CommentsViewController

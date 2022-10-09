@@ -261,6 +261,8 @@ class PostViewController: UIViewController {
             model.isLikeByCurrentUser = true
         }
         
+        HapticsManager.shared.vibrateForSelection()
+        
         // double tap on wherever on the screen.
         let touchPoint = gesture.location(in: view)
         
