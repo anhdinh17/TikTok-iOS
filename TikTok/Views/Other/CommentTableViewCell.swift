@@ -15,8 +15,6 @@ class CommentTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true
-        imageView.backgroundColor = .systemPink
-        
         return imageView
     }()
     
@@ -24,8 +22,6 @@ class CommentTableViewCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .label
-        label.backgroundColor = .blue
-        
         return label
     }()
     
@@ -33,8 +29,6 @@ class CommentTableViewCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .secondaryLabel
-        label.backgroundColor = .blue
-        
         return label
     }()
     
@@ -42,6 +36,8 @@ class CommentTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        backgroundColor = .secondarySystemBackground
+        contentView.backgroundColor = .secondarySystemBackground
         contentView.clipsToBounds = true
         
         // add variables
